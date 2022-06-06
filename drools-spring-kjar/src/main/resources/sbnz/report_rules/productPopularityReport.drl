@@ -1,0 +1,51 @@
+package report_rules;
+
+import sbnz.skincare.facts.Product;
+import sbnz.skincare.facts.Routine;
+
+declare BestProduct
+end
+
+declare WorstProduct
+end
+
+rule "Most popular product"
+	salience 100 * $value
+	when
+		$p: Product($pid: id)
+		$a: List() from accumulate (
+		    $r: Routine($products: products) and  // For every routine get a list of all product id's with repetition
+	   		Product($i: id) from $products,
+	       	collectList($i)
+	    )
+		Number($value: intValue) from accumulate ( // Count the number of occurences of each product id
+	
+	       	Number($num: this, $num == $pid) from $a,
+	       	count(1)
+		);
+		not BestProduct();
+	then
+		System.out.println("Best Product: " + $value  + " : " + $pid + " : " + $a );			
+		insert ( new BestProduct() );
+end;
+
+
+rule "Least popular product"
+	salience -100 * $value
+	when
+		$p: Product($pid: id)
+		$a: List() from accumulate (
+		    $r: Routine($products: products) and  // For every routine get a list of all product id's with repetition
+	   		Product($i: id) from $products,
+	       	collectList($i)
+	    )
+		Number($value: intValue) from accumulate ( // Count the number of occurences of each product id
+	
+	       	Number($num: this, $num == $pid) from $a,
+	       	count(1)
+		);
+		not WorstProduct();
+	then
+		System.out.println("WorstProduct: " + $value  + " : " + $pid + " : " + $a );			
+		insert ( new WorstProduct() );
+end;
