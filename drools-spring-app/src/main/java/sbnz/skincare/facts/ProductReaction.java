@@ -9,15 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "product_reaction")
 public class ProductReaction {
@@ -29,14 +20,54 @@ public class ProductReaction {
 	@Column(name = "reaction", nullable = false)
 	private String reaction;
 
-	@Column(name = "advice", nullable = false)
-	private String advice;
-
 	@ManyToOne
 	private Product product;
 
 	@ManyToOne
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Patient patient;
+
+	public ProductReaction() {
+		super();
+	}
+
+	public ProductReaction(String reaction, Product product, Patient patient) {
+		super();
+		this.reaction = reaction;
+		this.product = product;
+		this.patient = patient;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getReaction() {
+		return reaction;
+	}
+
+	public void setReaction(String reaction) {
+		this.reaction = reaction;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
 
 }

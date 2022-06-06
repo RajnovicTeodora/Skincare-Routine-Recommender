@@ -6,20 +6,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import sbnz.skincare.facts.enumerations.Gender;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "Patient")
 public class Patient extends User {
 
 	/**
@@ -40,5 +34,37 @@ public class Patient extends User {
 	@OneToMany(mappedBy = "patient")
 	@JsonIgnore
 	protected List<ProductReaction> productReactions;
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public List<Routine> getRoutines() {
+		return routines;
+	}
+
+	public void setRoutines(List<Routine> routines) {
+		this.routines = routines;
+	}
+
+	public List<ProductReaction> getProductReactions() {
+		return productReactions;
+	}
+
+	public void setProductReactions(List<ProductReaction> productReactions) {
+		this.productReactions = productReactions;
+	}
 
 }
