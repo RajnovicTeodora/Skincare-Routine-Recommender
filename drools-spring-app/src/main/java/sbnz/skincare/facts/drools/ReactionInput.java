@@ -11,113 +11,40 @@ public class ReactionInput implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Boolean skinRedness;
+	private String reaction;
 
-	private Boolean itching;
-
-	private Boolean redPatches;
-
-	private Boolean swelling;
-
-	private Boolean lowBloodPressure;
-
-	private int heartRate;
-
-	private Boolean breakouts;
-
-	private int monthsOfProductUse;
+	private String symptom;
 
 	public ReactionInput() {
 		super();
 	}
 
+	public ReactionInput(String reaction, String symptom) {
+		super();
+		this.reaction = reaction;
+		this.symptom = symptom;
+	}
+
 	public ReactionInput(NewProductReactionDTO dto) {
 		super();
-		this.skinRedness = dto.getSkinRedness();
-		this.itching = dto.getItching();
-		this.redPatches = dto.getRedPatches();
-		this.swelling = dto.getSwelling();
-		this.lowBloodPressure = dto.getLowBloodPressure();
-		this.heartRate = dto.getHeartRate();
-		this.breakouts = dto.getBreakouts();
-		this.monthsOfProductUse = dto.getMonthsOfProductUse();
+		this.reaction = dto.getReaction();
+		this.symptom = dto.getSymptom();
 	}
 
-	public ReactionInput(Boolean skinRedness, Boolean itching, Boolean redPatches, Boolean swelling,
-			Boolean lowBloodPressure, int heartRate, Boolean breakouts, int monthsOfProductUse) {
-		super();
-		this.skinRedness = skinRedness;
-		this.itching = itching;
-		this.redPatches = redPatches;
-		this.swelling = swelling;
-		this.lowBloodPressure = lowBloodPressure;
-		this.heartRate = heartRate;
-		this.breakouts = breakouts;
-		this.monthsOfProductUse = monthsOfProductUse;
+	public String getReaction() {
+		return reaction;
 	}
 
-	public Boolean getSkinRedness() {
-		return skinRedness;
+	public void setReaction(String reaction) {
+		this.reaction = reaction;
 	}
 
-	public void setSkinRedness(Boolean skinRedness) {
-		this.skinRedness = skinRedness;
+	public String getSymptom() {
+		return symptom;
 	}
 
-	public Boolean getItching() {
-		return itching;
-	}
-
-	public void setItching(Boolean itching) {
-		this.itching = itching;
-	}
-
-	public Boolean getRedPatches() {
-		return redPatches;
-	}
-
-	public void setRedPatches(Boolean redPatches) {
-		this.redPatches = redPatches;
-	}
-
-	public Boolean getSwelling() {
-		return swelling;
-	}
-
-	public void setSwelling(Boolean swelling) {
-		this.swelling = swelling;
-	}
-
-	public Boolean getLowBloodPressure() {
-		return lowBloodPressure;
-	}
-
-	public void setLowBloodPressure(Boolean lowBloodPressure) {
-		this.lowBloodPressure = lowBloodPressure;
-	}
-
-	public int getHeartRate() {
-		return heartRate;
-	}
-
-	public void setHeartRate(int heartRate) {
-		this.heartRate = heartRate;
-	}
-
-	public Boolean getBreakouts() {
-		return breakouts;
-	}
-
-	public void setBreakouts(Boolean breakouts) {
-		this.breakouts = breakouts;
-	}
-
-	public int getMonthsOfProductUse() {
-		return monthsOfProductUse;
-	}
-
-	public void setMonthsOfProductUse(int monthsOfProductUse) {
-		this.monthsOfProductUse = monthsOfProductUse;
+	public void setSymptom(String symptom) {
+		this.symptom = symptom;
 	}
 
 }
