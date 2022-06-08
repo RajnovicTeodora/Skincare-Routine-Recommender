@@ -10,15 +10,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import sbnz.skincare.security.RestAuthenticationEntryPoint;
+import sbnz.skincare.security.TokenAuthenticationProvider;
 import sbnz.skincare.security.util.TokenUtils;
 import sbnz.skincare.service.CustomUserDetailsService;
-
 
 
 @Configuration
@@ -26,44 +24,42 @@ import sbnz.skincare.service.CustomUserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Autowired
+    private TokenAuthenticationProvider authenticationProvider;
 
 
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(customUserDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
 
-	@Autowired
-	public WebSecurityConfig(RestAuthenticationEntryPoint unauthorizedHandler,
-			CustomUserDetailsService userDetailsService) {
-		this.restAuthenticationEntryPoint = unauthorizedHandler;
-		this.customUserDetailsService = userDetailsService;
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Autowired
-	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(customUserDetailsService)
-				.passwordEncoder(new BCryptPasswordEncoder());
-	}
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Autowired
+    private TokenUtils tokenUtils;
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-    
-	@Autowired
-	private TokenUtils tokenUtils;
+    // Define access rights for request towards specific URL's or routes
+    @Override
+    protected void configure(HttpSecurity http) throws Exception { // TODO
+        http.headers().frameOptions().disable();
 
-	// Definisemo prava pristupa za zahteve ka odredjenim URL-ovima/rutama
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.headers().frameOptions().disable();
-
-		http
+        http
                 .csrf()
                 .disable()
                 //.exceptionHandling()
@@ -99,14 +95,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.headers().xssProtection().and().contentSecurityPolicy("script-src 'self'");
 		*/
-	}
+    }
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	
-		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login", "/routine/getRoutineRecommendation");
-		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",
-				"/**/*.css", "/**/*.js");
-	}
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+
+        web.ignoring().antMatchers(HttpMethod.POST, "/auth/login", "/routine/getRoutineRecommendation");
+        web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",
+                "/**/*.css", "/**/*.js");
+    }
 
 }

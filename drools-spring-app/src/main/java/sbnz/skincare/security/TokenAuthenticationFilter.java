@@ -17,60 +17,52 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.ExpiredJwtException;
 import sbnz.skincare.security.util.TokenUtils;
 
-public class TokenAuthenticationFilter extends OncePerRequestFilter  {//OncePerRequestFilter UsernamePasswordAuthenticationFilter
+public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-	private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
+    private final UserDetailsService userDetailsService;
+    protected final Log LOGGER = LogFactory.getLog(getClass());
 
-	private UserDetailsService userDetailsService;
+    public TokenAuthenticationFilter(TokenUtils tokenUtils, UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+        this.tokenUtils = tokenUtils;
+    }
 
-	protected final Log LOGGER = LogFactory.getLog(getClass());
+    @Override
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
-	public TokenAuthenticationFilter(TokenUtils tokenUtils, UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-		this.tokenUtils = tokenUtils;
-	}
+        String username;
+        String authToken = tokenUtils.getToken(request);
 
-	@Override
-	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+        try {
+            if (authToken != null) {
 
+                // Get username from token
+                username = tokenUtils.getUsernameFromToken(authToken);
 
-		String username;
+                if (username != null) {
 
-		// 1. Preuzimanje JWT tokena i cookie iz zahteva
-		String authToken = tokenUtils.getToken(request);
-		if(authToken != null && authToken.startsWith("\"")){
-			authToken = authToken.substring(1, authToken.length()-1);
-		}
-		try {
+                    // Get user based on username
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-			if (authToken != null) {
+                    // Check if passed token is valid
+                    if (tokenUtils.validateToken(authToken, userDetails)) {
 
-				// 2. Citanje korisnickog imena iz tokena
-				username = tokenUtils.getUsernameFromToken(authToken);
+                        // Create authentication
+                        TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
+                        authentication.setToken(authToken);
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                }
+            }
 
-				if (username != null) {
+        } catch (ExpiredJwtException ex) {
+            LOGGER.debug("Token expired!");
+        }
 
-					// 3. Preuzimanje korisnika na osnovu username-a
-					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-					// 4. Provera da li je prosledjeni token validan
-					if (tokenUtils.validateToken(authToken, userDetails)) {
-
-						// 5. Kreiraj autentifikaciju
-						TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
-						authentication.setToken(authToken);
-						SecurityContextHolder.getContext().setAuthentication(authentication);
-					}
-				}
-			}
-
-		} catch (ExpiredJwtException ex) {
-			LOGGER.debug("Token expired!");
-		}
-
-		// prosledi request dalje u sledeci filter
-		chain.doFilter(request, response);
-	}
+        // Pass the request to the next filter
+        chain.doFilter(request, response);
+    }
 
 }

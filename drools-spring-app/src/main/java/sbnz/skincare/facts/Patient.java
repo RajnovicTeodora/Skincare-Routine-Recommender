@@ -13,58 +13,57 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import sbnz.skincare.facts.enumerations.Gender;
 
 @Entity
-@Table(name = "Patient")
 public class Patient extends User {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Column(nullable = false)
-	private LocalDate birthday;
+    @Column(nullable = false)
+    private LocalDate birthday;
 
-	@Column(nullable = false)
-	private Gender gender;
+    @Column(nullable = false)
+    private Gender gender;
 
-	@OneToMany(mappedBy = "patient")
-	@JsonIgnore
-	protected List<Routine> routines;
+    @OneToMany(mappedBy = "patient")
+    @JsonIgnore
+    protected List<Routine> routines;
 
-	@OneToMany(mappedBy = "patient")
-	@JsonIgnore
-	protected List<ProductReaction> productReactions;
+    @OneToMany(mappedBy = "patient")
+    @JsonIgnore
+    protected List<ProductReaction> productReactions;
 
-	public LocalDate getBirthday() {
-		return birthday;
-	}
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public Gender getGender() {
+        return gender;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
-	public List<Routine> getRoutines() {
-		return routines;
-	}
+    public List<Routine> getRoutines() {
+        return routines;
+    }
 
-	public void setRoutines(List<Routine> routines) {
-		this.routines = routines;
-	}
+    public void setRoutines(List<Routine> routines) {
+        this.routines = routines;
+    }
 
-	public List<ProductReaction> getProductReactions() {
-		return productReactions;
-	}
+    public List<ProductReaction> getProductReactions() {
+        return productReactions;
+    }
 
-	public void setProductReactions(List<ProductReaction> productReactions) {
-		this.productReactions = productReactions;
-	}
+    public void setProductReactions(List<ProductReaction> productReactions) {
+        this.productReactions = productReactions;
+    }
 
 }
