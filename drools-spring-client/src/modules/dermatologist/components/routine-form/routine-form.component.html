@@ -1,0 +1,96 @@
+<h2 mat-dialog-title class="title">Perscribe routine</h2>
+<mat-dialog-content [formGroup]="routineForm">
+  <mat-form-field id="manufacturer">
+    <input
+      matInput
+      type="text"
+      formControlName="manufacturer"
+      required
+      placeholder="Manufacturer"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Skin Characteristics</mat-label>
+    <mat-select formControlName="skinCharacteristics" [multiple]="true">
+      <mat-option
+        *ngFor="let skinCharacteristic of skinCharacteristicsSelect"
+        [value]="skinCharacteristic.value"
+      >
+        {{ skinCharacteristic.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Wanted Goals</mat-label>
+    <mat-select formControlName="wantedGoals" [multiple]="true">
+      <mat-option *ngFor="let goal of goalsSelect" [value]="goal.value">
+        {{ goal.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Acne Type</mat-label>
+    <mat-select formControlName="acneType">
+      <mat-option
+        *ngFor="let acneType of acneTypeSelect"
+        [value]="acneType.value"
+      >
+        {{ acneType.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Allergies</mat-label>
+    <mat-list>
+      <mat-list-item *ngFor="let allergy of this.allergies"
+        >{{ allergy
+        }}<button
+          mat-stroked-button
+          color="accent"
+          (click)="deleteAllergy(allergy)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button></mat-list-item
+      >
+
+      <input
+        matInput
+        type="text"
+        formControlName="allergy"
+        required
+        placeholder="Allergy"
+      />
+      <button mat-stroked-button color="accent" (click)="addAllergy()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-list>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    mat-flat-button
+    color="accent"
+    type="submit"
+    class="submit-button"
+    (click)="cancel()"
+    id="cancel-button"
+  >
+    Cancel
+  </button>
+  <button
+    mat-flat-button
+    color="accent"
+    type="submit"
+    class="submit-button"
+    (click)="getRoutineRecommendation()"
+    [disabled]="routineForm.invalid"
+    id="submit-drink-button"
+  >
+    Save
+  </button>
+</mat-dialog-actions>
