@@ -4,9 +4,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../root/material-module';
+import { ReplaceUnderscorePipe } from './pipes/replace-underscore/replace-underscore.pipe';
+import { PatientRoutinesTableComponent } from './components/patient-routines-table/patient-routines-table.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [ReplaceUnderscorePipe, PatientRoutinesTableComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

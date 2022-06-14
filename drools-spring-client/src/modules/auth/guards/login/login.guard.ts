@@ -23,9 +23,7 @@ export class LoginGuard implements CanActivate {
     }
 
     // Redirect to login
-    this.router.navigate(['skincare/login'], {
-      queryParams: { returnUrl: state.url },
-    });
+    this.router.navigate(['skincare/login']);
     return false;
   }
 }

@@ -60,14 +60,13 @@ export class LoginFormComponent implements OnInit {
     };
 
     this.authService.login(loggedUser).subscribe({
-      next: (result) => {
+      next: () => {
         this.toastr.success('Successful login!');
         this.loginForm.reset();
-        console.log(this.authService.getRole());
         if (this.authService.getRole() == 'ADMIN') {
-          console.log('cao');
           this.router.navigate(['skincare/admin']);
-        } else {
+        } else if (this.authService.getRole() == 'DERMATOLOGIST') {
+          this.router.navigate(['skincare/dermatologist']);
         }
       },
       error: (error) => {

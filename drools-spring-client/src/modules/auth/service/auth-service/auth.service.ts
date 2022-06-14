@@ -5,6 +5,7 @@ import { ApiService } from 'src/modules/shared/services/api-service/api.service'
 import { UserService } from 'src/modules/shared/services/user-service/user.service';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LoggedInUser } from 'src/modules/shared/models/logged-in-user';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,9 @@ export class AuthService {
           let role = decodedJwtData.role;
 
           sessionStorage.setItem('role', role);
+
+          let username = decodedJwtData.username;
+          sessionStorage.setItem('username', username);
         })
       );
   }
@@ -78,6 +82,17 @@ export class AuthService {
   getRole() {
     const role = JSON.stringify(sessionStorage.getItem('role'));
     return role.substring(1, role.length - 1);
+  }
+  // Get user username
+  getUsername() {
+    const username = JSON.stringify(sessionStorage.getItem('username'));
+    return username.substring(1, username.length - 1);
+  }
+
+  getLoggedInUser() {
+    const role = this.getRole();
+    const username = this.getUsername();
+    return new LoggedInUser(username, role);
   }
 
   getToken() {
