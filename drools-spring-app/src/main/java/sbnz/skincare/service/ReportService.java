@@ -35,9 +35,9 @@ public class ReportService {
 		Patient u1 = new Patient();
 		Patient u2 = new Patient();
 
-		Product p1 = new Product("p1", ProductType.EXFOLIATOR, "m1", "image", 10, null);
-		Product p2 = new Product("p2", ProductType.EXFOLIATOR, "m2", "image", 20, null);
-		Product p3 = new Product("p3", ProductType.EXFOLIATOR, "m1", "image", 10, null);
+		Product p1 = new Product("p1", ProductType.EXFOLIATOR, "m1", "ui", "image", 10, null);
+		Product p2 = new Product("p2", ProductType.EXFOLIATOR, "m2", "ui", "image", 20, null);
+		Product p3 = new Product("p3", ProductType.EXFOLIATOR, "m1", "ui", "image", 10, null);
 		
 		p1.setId(1);
 		p2.setId(2);
@@ -88,6 +88,6 @@ public class ReportService {
 		
 		
 		kSession.fireAllRules();
-
+		kSession.dispose();
 	}
 }

@@ -11,14 +11,14 @@ import sbnz.skincare.repository.SkinTypeCharacteristicsRepository;
 @Service
 public class SkinTypeCharacteristicsService {
 
-	private SkinTypeCharacteristicsRepository skinTypeCharacteristicsRepository;
+    private final SkinTypeCharacteristicsRepository skinTypeCharacteristicsRepository;
 
-	@Autowired
-	public SkinTypeCharacteristicsService(SkinTypeCharacteristicsRepository skinTypeCharacteristicsRepository) {
-		this.skinTypeCharacteristicsRepository = skinTypeCharacteristicsRepository;
-	}
+    @Autowired
+    public SkinTypeCharacteristicsService(SkinTypeCharacteristicsRepository skinTypeCharacteristicsRepository) {
+        this.skinTypeCharacteristicsRepository = skinTypeCharacteristicsRepository;
+    }
 
-	public List<SkinTypeCharacteristics> getAll() {
-		return this.skinTypeCharacteristicsRepository.findAll();
-	}
+    public List<SkinTypeCharacteristics> getAll() {
+        return this.skinTypeCharacteristicsRepository.findAll();
+    }
 }
