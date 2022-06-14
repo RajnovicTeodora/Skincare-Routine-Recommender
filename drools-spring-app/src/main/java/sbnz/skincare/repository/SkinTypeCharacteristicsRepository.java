@@ -9,7 +9,7 @@ import sbnz.skincare.facts.SkinTypeCharacteristics;
 
 @Repository
 public interface SkinTypeCharacteristicsRepository extends JpaRepository<SkinTypeCharacteristics, Long> {
-	
-	List<SkinTypeCharacteristics> findAll();
+
+    List<SkinTypeCharacteristics> findAll();
 
 }
