@@ -3,15 +3,7 @@ package sbnz.skincare.facts;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,108 +11,121 @@ import sbnz.skincare.facts.enumerations.ProductType;
 
 @Entity
 @Table(name = "product")
-public class Product implements Serializable{
+public class Product implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-	@Column(name = "product_type", nullable = false)
-	private ProductType productType;
+    @Column(name = "product_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
 
-	@Column(name = "manufacturer", nullable = false)
-	private String manufacturer;
+    @Column(name = "manufacturer", nullable = false)
+    private String manufacturer;
 
-	@Column(name = "image", nullable = false, columnDefinition = "text", length = 10485760)
-	private String image;
+    @Column(name = "usage_instructions", nullable = false)
+    private String usageInstructions;
 
-	@Column(name = "price", nullable = false)
-	private double price;
+    @Column(name = "image", nullable = false, columnDefinition = "text", length = 10485760)
+    private String image;
 
-	@ManyToMany
-	@JoinTable(name = "product_ingredient", joinColumns = {
-			@JoinColumn(name = "product_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "ingredient_id", referencedColumnName = "id") })
-	@JsonIgnore
-	private List<Ingredient> ingredients;
+    @Column(name = "price", nullable = false)
+    private double price;
 
-	public Product() {
-		super();
-	}
+    @ManyToMany
+    @JoinTable(name = "product_ingredient", joinColumns = {
+            @JoinColumn(name = "product_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "ingredient_id", referencedColumnName = "id")})
+    @JsonIgnore
+    private List<Ingredient> ingredients;
 
-	public Product(String name, ProductType productType, String manufacturer, String image, double price,
-			List<Ingredient> ingredients) {
-		super();
-		this.name = name;
-		this.productType = productType;
-		this.manufacturer = manufacturer;
-		this.image = image;
-		this.price = price;
-		this.ingredients = ingredients;
-	}
+    public Product() {
+        super();
+    }
 
-	public long getId() {
-		return id;
-	}
+    public Product(String name, ProductType productType, String manufacturer, String usageInstructions, String image, double price,
+                   List<Ingredient> ingredients) {
+        super();
+        this.name = name;
+        this.productType = productType;
+        this.manufacturer = manufacturer;
+        this.usageInstructions = usageInstructions;
+        this.image = image;
+        this.price = price;
+        this.ingredients = ingredients;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public ProductType getProductType() {
-		return productType;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setProductType(ProductType productType) {
-		this.productType = productType;
-	}
+    public ProductType getProductType() {
+        return productType;
+    }
 
-	public String getManufacturer() {
-		return manufacturer;
-	}
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
 
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
-	}
+    public String getManufacturer() {
+        return manufacturer;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public String getUsageInstructions() {
+        return usageInstructions;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public void setUsageInstructions(String usageInstructions) {
+        this.usageInstructions = usageInstructions;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public List<Ingredient> getIngredients() {
-		return ingredients;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public void setIngredients(List<Ingredient> ingredients) {
-		this.ingredients = ingredients;
-	}
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 
 }
