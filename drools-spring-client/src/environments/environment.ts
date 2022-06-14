@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   baseUrl: 'http://localhost:8080/api',
   login: 'auth/login',
+  getPatientsUrl: 'patients/getAll',
+  getRoutinePerscriptionUrl: 'routine/getRoutineRecommendation',
 };
 
 /*
