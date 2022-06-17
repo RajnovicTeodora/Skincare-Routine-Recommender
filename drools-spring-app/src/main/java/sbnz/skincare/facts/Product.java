@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import sbnz.skincare.dto.NewProductDTO;
 import sbnz.skincare.facts.enumerations.ProductType;
 
 @Entity
@@ -61,6 +62,17 @@ public class Product implements Serializable {
         this.usageInstructions = usageInstructions;
         this.image = image;
         this.price = price;
+        this.ingredients = ingredients;
+    }
+
+    public Product(NewProductDTO dto, List<Ingredient> ingredients) {
+        super();
+        this.name = dto.getName();
+        this.productType = dto.getProductType();
+        this.manufacturer = dto.getManufacturer();
+        this.usageInstructions = dto.getUsageInstructions();
+        this.image = dto.getImage();
+        this.price = dto.getPrice();
         this.ingredients = ingredients;
     }
 
