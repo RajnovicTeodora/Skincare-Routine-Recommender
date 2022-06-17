@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import sbnz.skincare.dto.RequestRoutineDTO;
+import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.facts.enumerations.*;
 
 public class RecommendationInput implements Serializable {
@@ -38,13 +39,17 @@ public class RecommendationInput implements Serializable {
     // Previously used product manufacturer
     private String manufacturer;
 
+    // Patient reactions to products
+    private List<ProductReaction> productReactions;
+
     public RecommendationInput() {
         super();
     }
 
     public RecommendationInput(List<SkinCharacteristic> skinCharacteristics, SkinType diagnosedSkinType,
                                LocalDate birthday, AgeGroup ageGroup, List<Goal> wantedGoals,
-                               AcneType acneType, List<String> allergies, String manufacturer) {
+                               AcneType acneType, List<String> allergies, String manufacturer,
+                               List<ProductReaction> productReactions) {
         super();
         this.skinCharacteristics = skinCharacteristics;
         this.diagnosedSkinType = diagnosedSkinType;
@@ -54,16 +59,21 @@ public class RecommendationInput implements Serializable {
         this.acneType = acneType;
         this.allergies = allergies;
         this.manufacturer = manufacturer;
+        this.productReactions = productReactions;
     }
 
-    public RecommendationInput(RequestRoutineDTO requestRoutineDTO, LocalDate birthday) {
+    public RecommendationInput(RequestRoutineDTO requestRoutineDTO, LocalDate birthday,
+                               List<ProductReaction> productReactions) {
         super();
         this.skinCharacteristics = requestRoutineDTO.getSkinCharacteristics();
+        this.diagnosedSkinType = null;
         this.birthday = birthday;
+        this.ageGroup = null;
         this.wantedGoals = requestRoutineDTO.getWantedGoals();
         this.acneType = requestRoutineDTO.getAcneType();
         this.allergies = requestRoutineDTO.getAllergies();
         this.manufacturer = requestRoutineDTO.getManufacturer();
+        this.productReactions = productReactions;
     }
 
     public List<SkinCharacteristic> getSkinCharacteristics() {
@@ -130,4 +140,11 @@ public class RecommendationInput implements Serializable {
         this.manufacturer = manufacturer;
     }
 
+    public List<ProductReaction> getProductReactions() {
+        return productReactions;
+    }
+
+    public void setProductReactions(List<ProductReaction> productReactions) {
+        this.productReactions = productReactions;
+    }
 }

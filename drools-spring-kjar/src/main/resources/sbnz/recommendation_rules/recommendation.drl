@@ -2,6 +2,7 @@ package recommendation_rules;
 
 import sbnz.skincare.facts.Ingredient;
 import sbnz.skincare.facts.Product;
+import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.facts.Routine;
 import sbnz.skincare.facts.SkinTypeCharacteristics;
 import sbnz.skincare.facts.drools.IngredientScoring;
@@ -36,7 +37,7 @@ end
 // ========= Rules to determine age group =========
 rule "Age Group - CHILD"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() <= 14 ) 
 	then
@@ -46,7 +47,7 @@ end
 
 rule "Age Group - YOUTH"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() > 14 && Period.between(birthday, LocalDate.now()).getYears() <= 25 ) 
 	then
@@ -56,7 +57,7 @@ end
 
 rule "Age Group - ADULT"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() > 25 && Period.between(birthday, LocalDate.now()).getYears() <= 64 ) 
 	then
@@ -66,7 +67,7 @@ end
 
 rule "Age Group - SENIOR"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() > 64 ) 
 	then
@@ -96,7 +97,7 @@ end
 // ========= Rules for ingredient scoring based on it's benefiting factors =========
 rule "Ingredients Scoring"
 
-	salience 2
+	salience 3
 	when
 		$i: Ingredient($ingredientName: name, $benefitingAge: benefitingAge,$benefitingSkinType: benefitingSkinType, $benefitingGoals: benefitingGoals)
 		$r: RecommendationInput(diagnosedSkinType != null, $skinType: diagnosedSkinType, $ageGroup: ageGroup, $acneType: acneType, $wantedGoals: wantedGoals)
@@ -124,11 +125,10 @@ rule "Ingredients Scoring"
 end 
 // ==================
 
-// ========= Rules to remove products containing allergens	
+// ========= Rules to remove products containing allergens =========
 rule "Remove products with allergen"
 	
-	agenda-group "recommendation"
-	salience 1
+	salience 2
 	when 
 		$p: Product($productName: name, $manufacturer: manufacturer, $ingredients: ingredients)
 		$r: RecommendationInput($allergies: allergies)
@@ -137,6 +137,25 @@ rule "Remove products with allergen"
         
 	then 
 		System.out.println("Remove product containing alergen: " + $productName);
+		delete($p)
+end
+// ==================
+
+// ========= Rules to remove products with bad reaction =========
+rule "Remove products with reaction"
+	
+	salience 1
+	when 
+		$p: Product($productName: name)
+		$r: RecommendationInput($productReactions: productReactions)
+		$productReactionIds: List() from accumulate (
+	        ProductReaction($product: product) from $productReactions,
+	        collectList($product.getId())
+	    )
+        exists( Product(id memberOf $productReactionIds) from $p )         	
+        
+	then 
+		System.out.println("Remove product containing reaction: " + $productName);
 		delete($p)
 end
 // ==================

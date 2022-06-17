@@ -17,8 +17,9 @@ import sbnz.skincare.dto.RequestRoutineDTO;
 import sbnz.skincare.dto.RoutineWithReactionDTO;
 import sbnz.skincare.facts.*;
 import sbnz.skincare.facts.drools.RecommendationInput;
-import sbnz.skincare.facts.enumerations.*;
+import sbnz.skincare.repository.IngredientRepository;
 import sbnz.skincare.repository.PatientRepository;
+import sbnz.skincare.repository.ProductRepository;
 import sbnz.skincare.repository.RoutineRepository;
 
 import javax.validation.constraints.NotNull;
@@ -26,119 +27,99 @@ import javax.validation.constraints.NotNull;
 @Service
 public class SkincareRoutineService {
 
-    private static Logger log = LoggerFactory.getLogger(SkincareRoutineService.class);
+	private static Logger log = LoggerFactory.getLogger(SkincareRoutineService.class);
 
-    private final KieContainer kieContainer;
+	private final KieContainer kieContainer;
 
-    private final SkinTypeCharacteristicsService skinTypeCharacteristicsService;
+	private final SkinTypeCharacteristicsService skinTypeCharacteristicsService;
 
-    private final RoutineRepository routineRepository;
+	private final RoutineRepository routineRepository;
 
-    private final PatientRepository patientRepository;
+	private final PatientRepository patientRepository;
 
-    private final ProductReactionService productReactionService;
+	private final ProductReactionService productReactionService;
 
-    @Autowired
-    public SkincareRoutineService(KieContainer kieContainer,
-                                  SkinTypeCharacteristicsService skinTypeCharacteristicsService,
-                                  RoutineRepository routineRepository,
-                                  PatientRepository patientRepository,
-                                  ProductReactionService productReactionService) {
-        this.kieContainer = kieContainer;
-        this.skinTypeCharacteristicsService = skinTypeCharacteristicsService;
-        this.routineRepository = routineRepository;
-        this.patientRepository = patientRepository;
-        this.productReactionService = productReactionService;
-    }
+	private final IngredientRepository ingredientRepository; // TODO move to service
 
-    public Routine getRoutineRecommendation(@NotNull RequestRoutineDTO request) throws NotFoundException {
+	private final ProductRepository productRepository;
 
-        KieSession kSession = kieContainer.newKieSession();
+	@Autowired
+	public SkincareRoutineService(KieContainer kieContainer,
+			SkinTypeCharacteristicsService skinTypeCharacteristicsService, RoutineRepository routineRepository,
+			PatientRepository patientRepository, ProductReactionService productReactionService,
+			IngredientRepository ingredientRepository, ProductRepository productRepository) {
+		this.kieContainer = kieContainer;
+		this.skinTypeCharacteristicsService = skinTypeCharacteristicsService;
+		this.routineRepository = routineRepository;
+		this.patientRepository = patientRepository;
+		this.productReactionService = productReactionService;
+		this.ingredientRepository = ingredientRepository;
+		this.productRepository = productRepository;
+	}
 
-        Patient patient = patientRepository.findByUsername(request.getPatientUsername())
-                .orElseThrow(
-                        () -> new NotFoundException(
-                                String.format("Patient with username %s not found", request.getPatientUsername())
-                        )
-                );
+	public Routine getRoutineRecommendation(@NotNull RequestRoutineDTO request)
+			throws NotFoundException {
 
-        RecommendationInput recommendationInput = new RecommendationInput(request, patient.getBirthday());
+		KieSession kSession = kieContainer.newKieSession("recommendation_rules");
 
-        kSession.insert(this.skinTypeCharacteristicsService.getAll());
+		// Find patient
+		Patient patient = patientRepository.findByUsername(request.getPatientUsername())
+				.orElseThrow(() -> new NotFoundException(
+						String.format("Patient with username %s not found", request.getPatientUsername())));
 
-        List<SkinCharacteristic> scp = new ArrayList<SkinCharacteristic>();
-        scp.add(SkinCharacteristic.BLEMISHES);
-        scp.add(SkinCharacteristic.VISIBLE_PORES);
-        scp.add(SkinCharacteristic.OILY_SKIN);
+		// Insert characteristics for each skin type
+		for (SkinTypeCharacteristics stc : this.skinTypeCharacteristicsService.getAll()) {
+			kSession.insert(stc);
+		}
 
-        Goal g1 = Goal.REDUCE_ACNE;
-        Goal g2 = Goal.REDUCE_OILINESS;
-        Goal g3 = Goal.REDUCE_REDNESS;
+		// Insert ingredients
+		for (Ingredient i : this.ingredientRepository.findAll()) {
+			kSession.insert(i);
+		}
 
-        List<Goal> gl1 = new ArrayList<Goal>();
-        gl1.add(g1);
-        gl1.add(g2);
+		// Insert products
+		for (Product p : this.productRepository.findAll()) {
+			kSession.insert(p);
+		}
 
-        List<Goal> gl2 = new ArrayList<Goal>();
-        gl2.add(g1);
-        gl2.add(g3);
+		// Create recommendation input
+		RecommendationInput recommendationInput = new RecommendationInput(request, patient.getBirthday(),
+				patient.getProductReactions());
+		kSession.insert(recommendationInput);
 
-        List<Goal> gl3 = new ArrayList<Goal>();
-        gl3.add(g3);
+		// Create routine
+		Routine routine = new Routine(LocalDate.now(), new ArrayList<>(), patient);
+		kSession.insert(routine);
 
-        Ingredient i1 = new Ingredient("i1", AcneType.PUSTULES, AgeGroup.YOUTH, SkinType.OILY, gl1);
-        Ingredient i2 = new Ingredient("i2", AcneType.PAPULES, AgeGroup.YOUTH, SkinType.OILY, gl3);
+		kSession.fireAllRules();
+		kSession.dispose();
 
-        List<String> alergies1 = new ArrayList<String>();
-        alergies1.add("i2");
+		// Save to database
+		this.routineRepository.save(routine);
+		this.patientRepository.save(patient);
 
-        List<Ingredient> il1 = new ArrayList<>();
-        il1.add(i1);
+		return routine;
+	}
 
-        List<Ingredient> il2 = new ArrayList<>();
-        il2.add(i2);
+	public List<Routine> findByPatientUsername(String username) {
+		return this.routineRepository.findByPatientUsername(username);
+	}
 
-        List<Ingredient> il3 = new ArrayList<>();
-        il3.add(i1);
-
-        Product p1 = new Product("p1", ProductType.SERUM, "m1", "ui1", "image", 10, il1);
-        Product p3 = new Product("p3", ProductType.SERUM, "m2","ui2",  "image", 10, il1);
-        Product p2 = new Product("p2", ProductType.EXFOLIATOR, "m2","ui1",  "image", 20, il2);
-
-        RecommendationInput sti = new RecommendationInput(scp, null, LocalDate.now().minusYears(17), null, gl2, AcneType.PUSTULES, alergies1, "m2");
-
-        kSession.insert(i1);
-        kSession.insert(i2);
-        kSession.insert(p1);
-        kSession.insert(p2);
-        kSession.insert(p3);
-        kSession.insert(sti);
-
-        kSession.fireAllRules();
-
-        System.out.println(sti.getDiagnosedSkinType());
-        System.out.println(sti.getAgeGroup());
-        kSession.dispose();
-        return new Routine();
-    }
-
-    public List<Routine> findByPatientUsername(String username){
-        return this.routineRepository.findByPatientUsername(username);
-    }
-
-    public List<RoutineWithReactionDTO> findPatientRoutinesWithReaction(String username){
-        List<Routine> routines = findByPatientUsername(username);
-        List<RoutineWithReactionDTO> routinesWithReaction = new ArrayList<>();
-        routines.forEach(routine -> {
-            List<ProductReactionDTO> productReactions = new ArrayList<>();
-            routine.getProducts().forEach(product -> {
-                ProductReaction productReaction = this.productReactionService
-                        .findByProductAndPatient(product.getId(), username);
-                if(productReaction == null) productReactions.add(new ProductReactionDTO(product));
-                else productReactions.add(new ProductReactionDTO(productReaction));
-            });
-            routinesWithReaction.add(new RoutineWithReactionDTO(routine.getStartDate(), productReactions));
-        });
-        return routinesWithReaction;
-    }
+	public List<RoutineWithReactionDTO> findPatientRoutinesWithReaction(String username) {
+		List<Routine> routines = findByPatientUsername(username);
+		List<RoutineWithReactionDTO> routinesWithReaction = new ArrayList<>();
+		routines.forEach(routine -> {
+			List<ProductReactionDTO> productReactions = new ArrayList<>();
+			routine.getProducts().forEach(product -> {
+				ProductReaction productReaction = this.productReactionService.findByProductAndPatient(product.getId(),
+						username);
+				if (productReaction == null)
+					productReactions.add(new ProductReactionDTO(product));
+				else
+					productReactions.add(new ProductReactionDTO(productReaction));
+			});
+			routinesWithReaction.add(new RoutineWithReactionDTO(routine.getStartDate(), productReactions));
+		});
+		return routinesWithReaction;
+	}
 }

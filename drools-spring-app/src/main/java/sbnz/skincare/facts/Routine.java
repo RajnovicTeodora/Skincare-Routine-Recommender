@@ -72,4 +72,7 @@ public class Routine {
 		this.patient = patient;
 	}
 
+	public void addProduct(Product p){
+		this.products.add(p);
+	}
 }
