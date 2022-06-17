@@ -14,6 +14,7 @@ public class ProductReactionDTO extends ProductDTO {
 
     public ProductReactionDTO(Product product) {
         super(product);
+        this.reaction = null;
     }
 
     public ProductReactionDTO(Product product, String reaction) {
