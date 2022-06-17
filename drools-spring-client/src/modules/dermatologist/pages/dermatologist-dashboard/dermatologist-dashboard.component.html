@@ -49,14 +49,15 @@
     <mat-divider></mat-divider>
 
     <mat-action-list>
-      <mat-list-item (click)="this.activeView = '1'"> Patients </mat-list-item>
+      <mat-list-item (click)="this.activeView = '3'"> Patients </mat-list-item>
+      <mat-list-item (click)="this.activeView = '1'"> Products </mat-list-item>
     </mat-action-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
       <app-patient-table
         class="patients"
-        *ngIf="this.activeView === '1'"
+        *ngIf="this.activeView === '3'"
         (onPatientRoutinesClicked)="onPatientRoutinesClicked($event)"
       ></app-patient-table>
       <app-patient-routines
@@ -64,6 +65,8 @@
         *ngIf="this.activeView === '2'"
         [username]="this.showRoutinesUsername"
       ></app-patient-routines>
+      <app-products class="products" *ngIf="this.activeView === '1'">
+      </app-products>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -85,7 +85,6 @@ export class PatientRoutinesTableComponent implements OnInit {
   updateData(routine: RoutineWithReaction) {
     const data = this.dataSource.data;
     data.push(routine);
-    console.log(routine);
     this.dataSource.data = data;
   }
 }

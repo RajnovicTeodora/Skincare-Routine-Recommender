@@ -9,6 +9,10 @@ import { PatientRoutinesComponent } from './pages/patient-routines/patient-routi
 import { RoutineFormComponent } from './components/routine-form/routine-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { ProductsComponent } from './pages/products/products.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
+import { ReplaceUnderscorePipe } from '../shared/pipes/replace-underscore/replace-underscore.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +20,9 @@ import { SharedModule } from '../shared/shared.module';
     PatientTableComponent,
     PatientRoutinesComponent,
     RoutineFormComponent,
+    ProductsComponent,
+    ProductCardComponent,
+    AddProductFormComponent,
   ],
   imports: [
     CommonModule,

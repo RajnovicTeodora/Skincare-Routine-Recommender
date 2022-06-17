@@ -13,6 +13,7 @@ import { RoutineProductsWithReactionComponent } from './components/routine-produ
     ReplaceUnderscorePipe,
     PatientRoutinesTableComponent,
     RoutineProductsWithReactionComponent,
+    ReplaceUnderscorePipe,
   ],
   imports: [
     CommonModule,
@@ -26,6 +27,6 @@ import { RoutineProductsWithReactionComponent } from './components/routine-produ
     }),
     MaterialModule,
   ],
-  exports: [PatientRoutinesTableComponent],
+  exports: [PatientRoutinesTableComponent, ReplaceUnderscorePipe],
 })
 export class SharedModule {}

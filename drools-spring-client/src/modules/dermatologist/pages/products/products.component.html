@@ -1,0 +1,27 @@
+<button
+  mat-stroked-button
+  color="accent"
+  class="addBttn"
+  (click)="openDialog()"
+>
+  <mat-icon>add</mat-icon>
+  Add Product
+</button>
+<div class="contnet">
+  <div class="card-deck" fxLayout="row wrap" fxLayoutGap="10px grid">
+    <div
+      fxFlex="25%"
+      fxFlex.xs="100%"
+      fxFlex.sm="33%"
+      *ngFor="let product of observable | async"
+    >
+      <app-product-card
+        id="{{ product.id }}"
+        [product]="product"
+        (deleteClicked)="onDeleted($event)"
+      >
+      </app-product-card>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15, 25]"></mat-paginator>
+</div>

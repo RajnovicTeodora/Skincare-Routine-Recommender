@@ -1,9 +1,9 @@
-export interface Product {
-  id: Number;
+export interface NewProduct {
   name: string;
   productType: string;
   manufacturer: string;
   usageInstructions: string;
   image: string;
-  price: Number;
+  price: number;
+  ingredients: Array<number>;
 }

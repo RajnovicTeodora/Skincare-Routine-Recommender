@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" 
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-   
+   <kbase name="sbnz" packages="sbnz">
+		<ksession name="ksession-rules"/>
+	</kbase>
+	<kbase name="reaction" eventProcessingMode="stream" packages="sbnz.reaction_rules">
+		<ksession name="reaction_rules"/>
+	</kbase>
+	<kbase name="login" eventProcessingMode="stream" packages="sbnz.recommendation_rules">
+		<ksession name="recommendation_rules"/>
+	</kbase>
+	<kbase name="advertisement" eventProcessingMode="stream" packages="sbnz.report_rules">
+		<ksession name="report_rules"/>
+	</kbase>
 </kmodule>
