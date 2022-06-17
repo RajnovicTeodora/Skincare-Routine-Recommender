@@ -1,46 +1,41 @@
 package sbnz.skincare.dto;
 
-import sbnz.skincare.facts.Product;
 import sbnz.skincare.facts.enumerations.ProductType;
 
-public class ProductDTO {
+import javax.validation.constraints.*;
+import java.util.List;
 
-    private long id;
+public class NewProductDTO {
+
+    @NotBlank
+    @Size(min = 2, max = 15)
+    @Pattern(message = "Name can contain alphanumeric characters only", regexp = "[a-zA-Z0-9]+")
     private String name;
+
+    @Pattern(regexp = "CLEANSER|EXFOLIATOR|SERUM|SUN_SCREEN|MOISTURIZER")
     private ProductType productType;
+
+    @NotBlank
+    @Size(min = 2, max = 20)
+    @Pattern(message = "Manufacturer can contain alphanumeric characters only", regexp = "[a-zA-Z0-9]+")
     private String manufacturer;
+
+    @NotBlank
+    @Size(min = 2, max = 120)
+    @Pattern(message = "Usage Instructions can contain dots and alphanumeric characters only", regexp = "[a-zA-Z0-9.]+")
     private String usageInstructions;
+
+    @NotBlank
     private String image;
+
+    @DecimalMax("999.99")
+    @DecimalMin("0.1")
     private double price;
 
-    public ProductDTO() {
-    }
+    @NotEmpty
+    private List<Long> ingredients;
 
-    public ProductDTO(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.productType = product.getProductType();
-        this.manufacturer = product.getManufacturer();
-        this.usageInstructions = product.getUsageInstructions();
-        this.image = product.getImage();
-        this.price = product.getPrice();
-    }
-
-    public ProductDTO(String name, ProductType productType, String manufacturer, String usageInstructions, String image, double price) {
-        this.name = name;
-        this.productType = productType;
-        this.manufacturer = manufacturer;
-        this.usageInstructions = usageInstructions;
-        this.image = image;
-        this.price = price;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public NewProductDTO() {
     }
 
     public String getName() {
@@ -89,5 +84,13 @@ public class ProductDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Long> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Long> ingredients) {
+        this.ingredients = ingredients;
     }
 }
