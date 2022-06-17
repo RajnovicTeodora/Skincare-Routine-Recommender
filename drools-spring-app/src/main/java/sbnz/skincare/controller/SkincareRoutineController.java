@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import sbnz.skincare.dto.RecommendedRoutineDTO;
 import sbnz.skincare.dto.RequestRoutineDTO;
 import sbnz.skincare.dto.RoutineDTO;
 import sbnz.skincare.dto.RoutineWithReactionDTO;
@@ -32,10 +31,10 @@ public class SkincareRoutineController {
     }
 
     @PostMapping("/getRoutineRecommendation")
-    public ResponseEntity<RecommendedRoutineDTO> getRoutineRecommendation(
+    public ResponseEntity<RoutineWithReactionDTO> getRoutineRecommendation(
             @RequestBody RequestRoutineDTO requestRoutineDTO) throws NotFoundException {
-        Routine r = this.skincareRoutineService.getRoutineRecommendation(requestRoutineDTO);
-        return new ResponseEntity<RecommendedRoutineDTO>(new RecommendedRoutineDTO(), HttpStatus.OK);
+        Routine routine = this.skincareRoutineService.getRoutineRecommendation(requestRoutineDTO);
+        return new ResponseEntity<>(new RoutineWithReactionDTO(routine), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getPatientRoutines/{username}", method = RequestMethod.GET, produces = "application/json")
