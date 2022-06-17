@@ -8,6 +8,7 @@ export const environment = {
   login: 'auth/login',
   getPatientsUrl: 'patients/getAll',
   getRoutinePerscriptionUrl: 'routine/getRoutineRecommendation',
+  getRoutinesWithReactionUrl: 'routine/getPatientRoutinesWithReaction',
 };
 
 /*
