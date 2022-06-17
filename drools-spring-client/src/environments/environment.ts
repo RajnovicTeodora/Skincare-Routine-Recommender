@@ -9,6 +9,9 @@ export const environment = {
   getPatientsUrl: 'patients/getAll',
   getRoutinePerscriptionUrl: 'routine/getRoutineRecommendation',
   getRoutinesWithReactionUrl: 'routine/getPatientRoutinesWithReaction',
+  getProductsUrl: 'products/getAll',
+  addProductUrl: 'products/addProduct',
+  getIngredientsUrl: 'ingredients/getAll',
 };
 
 /*
