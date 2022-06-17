@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
 import { PatientTableComponent } from './pages/patient-table/patient-table.component';
 import { PatientRoutinesComponent } from './pages/patient-routines/patient-routines.component';
 import { RoutineFormComponent } from './components/routine-form/routine-form.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MaterialModule,
     RouterModule.forChild(DermatologistRoutes),
-
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
   ],

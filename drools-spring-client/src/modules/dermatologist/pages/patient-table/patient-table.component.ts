@@ -12,7 +12,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Patient } from 'src/modules/shared/models/Patient';
+import { Patient } from 'src/modules/shared/models/patient';
 
 import { PatientService } from 'src/modules/shared/services/patient-service/patient.service';
 

@@ -6,9 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../root/material-module';
 import { ReplaceUnderscorePipe } from './pipes/replace-underscore/replace-underscore.pipe';
 import { PatientRoutinesTableComponent } from './components/patient-routines-table/patient-routines-table.component';
+import { RoutineProductsWithReactionComponent } from './components/routine-products-with-reaction/routine-products-with-reaction.component';
 
 @NgModule({
-  declarations: [ReplaceUnderscorePipe, PatientRoutinesTableComponent],
+  declarations: [
+    ReplaceUnderscorePipe,
+    PatientRoutinesTableComponent,
+    RoutineProductsWithReactionComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -19,6 +24,8 @@ import { PatientRoutinesTableComponent } from './components/patient-routines-tab
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    MaterialModule,
   ],
+  exports: [PatientRoutinesTableComponent],
 })
 export class SharedModule {}

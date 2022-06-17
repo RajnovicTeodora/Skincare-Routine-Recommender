@@ -96,8 +96,6 @@ export class AuthService {
   }
 
   getToken() {
-    console.log('getToken');
-    console.log(JSON.stringify(sessionStorage.getItem('jwt')));
     return JSON.stringify(sessionStorage.getItem('jwt'));
   }
 }

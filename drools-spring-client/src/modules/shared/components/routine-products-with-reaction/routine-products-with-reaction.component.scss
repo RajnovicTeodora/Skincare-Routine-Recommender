@@ -1,0 +1,40 @@
+.block {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+}
+.block {
+  overflow: hidden;
+  background: #ffff;
+  padding: 1rem;
+  margin: 0 0 1rem 0;
+}
+.block img {
+  width: 75px;
+  height: 75px;
+  float: left;
+  margin: 0 1rem 0 0;
+}
+.block h2 {
+  margin: 0 0 0.5rem 0;
+}
+/*NEW STYLES*/
+.block {
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+}
+
+.close-button {
+  float: right;
+  top: -10px;
+  right: -10px;
+}
+
+::ng-deep .icon-outside .close-button {
+  float: right;
+  top: -52px;
+  right: -52px;
+}
+
+::ng-deep .icon-outside .mat-dialog-container {
+  overflow: unset;
+}

@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { PatientRoutinesTableComponent } from 'src/modules/shared/components/patient-routines-table/patient-routines-table.component';
+import { RoutineWithReaction } from 'src/modules/shared/models/routine-with-reaction';
 import { RoutineFormComponent } from '../../components/routine-form/routine-form.component';
 
 @Component({
@@ -12,6 +14,9 @@ import { RoutineFormComponent } from '../../components/routine-form/routine-form
 export class PatientRoutinesComponent implements OnInit {
   @Input()
   username!: String | null;
+
+  @ViewChild(PatientRoutinesTableComponent)
+  patientRoutinesTableComponent!: PatientRoutinesTableComponent;
 
   constructor(
     //private itemService: ItemService,
@@ -34,8 +39,10 @@ export class PatientRoutinesComponent implements OnInit {
     let instance = dialogRef.componentInstance;
     instance.username = this.username;
     dialogRef.afterClosed().subscribe({
-      next: () => {
-        //this.setAll();
+      next: (result) => {
+        this.patientRoutinesTableComponent.updateData(
+          result as RoutineWithReaction
+        );
       },
       error: (error) => {
         this.toastr.error('Unable to create new routine');

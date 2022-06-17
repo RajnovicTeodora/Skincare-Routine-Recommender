@@ -14,4 +14,10 @@ export class RoutineService {
       routineInput
     );
   }
+
+  getRoutinesWithReaction(username: String) {
+    return this.apiService.get(
+      `${environment.baseUrl}/${environment.getRoutinesWithReactionUrl}/${username}`
+    );
+  }
 }

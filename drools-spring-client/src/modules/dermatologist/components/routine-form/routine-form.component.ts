@@ -25,10 +25,18 @@ export class RoutineFormComponent implements OnInit {
     { value: 'RED_PATCHES', viewValue: 'Red patches' },
     { value: 'RADIANT_COMPLEXION', viewValue: 'Radiant complexion' },
   ];
+
   goalsSelect: Select[] = [
     { value: 'REDUCE_REDNESS', viewValue: 'Reduce redness' },
-    { value: 'REDUCE_BLACKHEADS', viewValue: 'Reduce blackheads' },
+    { value: 'REDUCE_ACNE', viewValue: 'Reduce acne' },
+    { value: 'REDUCE_ACNE_SCARING', viewValue: 'Reduce acne scaring' },
     { value: 'REDUCE_OILINESS', viewValue: 'Reduce oiliness' },
+    { value: 'REDUCE_WRINKLES', viewValue: 'Reduce wrinkles' },
+    { value: 'REDUCE_SUN_DAMAGE', viewValue: 'Reduce sun damage' },
+    { value: 'IMPROVE_PIGMENTATION', viewValue: 'Improve pigmentation' },
+    { value: 'HYDRATE_SKIN', viewValue: 'Hydrate skin' },
+    { value: 'REDUCE_BREAKOUTS', viewValue: 'Reduce breakouts' },
+    { value: 'IMPROVE_SKIN_ELASTICITY', viewValue: 'Improve skin elasticity' },
   ];
 
   acneTypeSelect: Select[] = [
@@ -87,12 +95,12 @@ export class RoutineFormComponent implements OnInit {
       allergies: this.allergies,
       manufacturer: this.routineForm.value.manufacturer,
     };
-    console.log(routineInput);
 
     this.routineService.getRoutinePerscription(routineInput).subscribe({
       next: (success) => {
-        this.toastr.success('Successfully added and approved ' + success.name);
-        this.dialogRef.close(success);
+        this.toastr.success('Successfully perscribed a new routine!');
+        console.log(success.body);
+        this.dialogRef.close(success.body);
       },
       error: (error) => {
         this.toastr.error('Unable to add new item');
