@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { PatientService } from 'src/modules/shared/services/patient-service/patient.service';
-import { Patient } from 'src/modules/shared/models/patient';
-import { Router } from '@angular/router';
+import { User } from 'src/modules/shared/models/user';
+import { DermatologistService } from 'src/modules/shared/services/dermatologist-service/dermatologist.service';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+  selector: 'app-dermatologist-registration',
+  templateUrl: './dermatologist-registration.component.html',
+  styleUrls: ['./dermatologist-registration.component.scss'],
 })
-export class SignupComponent implements OnInit {
-  signupForm: FormGroup;
+export class DermatologistRegistrationComponent implements OnInit {
+  dermatologistForm: FormGroup;
 
   maxDate: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private patientService: PatientService,
-    public router: Router
+    private dermatologistService: DermatologistService
   ) {
-    this.signupForm = this.fb.group({
+    this.dermatologistForm = this.fb.group({
       username: [
         null,
         [
@@ -64,31 +61,28 @@ export class SignupComponent implements OnInit {
           Validators.email,
         ],
       ],
-      birthday: [null, Validators.required],
-      gender: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {}
 
-  savePatient() {
-    const patient: Patient = {
-      ...this.signupForm.value,
+  saveDermatologist() {
+    const user: User = {
+      ...this.dermatologistForm.value,
     };
-    console.log(patient);
-    this.patientService.register(patient).subscribe({
+    console.log(user);
+    this.dermatologistService.register(user).subscribe({
       next: () => {
-        this.toastr.success('Successfully created a new account');
-        this.router.navigate(['/skincare/auth/login']);
+        this.toastr.success('Successfully added a new dermatologist');
       },
       error: (error) => {
-        this.toastr.error('Unable to create a new account');
+        this.toastr.error('Unable to add a new dermatologist');
         console.log(error);
       },
     });
   }
 
   cancel() {
-    this.router.navigate(['/skincare/auth/login']);
+    // TODO close dialog
   }
 }

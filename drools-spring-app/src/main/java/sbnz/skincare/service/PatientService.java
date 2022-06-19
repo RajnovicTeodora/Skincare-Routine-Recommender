@@ -57,10 +57,6 @@ public class PatientService {
         patient.setPassword(passwordEncoder.encode(dto.getPassword()));
         patient.setRole(role);
 
-
-        //role.getUsers().add(patient);
-        //this.userRoleRepository.save(role);
-
         save(patient);
         return patient;
     }
