@@ -7,6 +7,7 @@ export const environment = {
   baseUrl: 'http://localhost:8080/api',
   login: 'auth/login',
   getPatientsUrl: 'patients/getAll',
+  registerPatientUrl: 'patients/register',
   getRoutinePerscriptionUrl: 'routine/getRoutineRecommendation',
   getRoutinesWithReactionUrl: 'routine/getPatientRoutinesWithReaction',
   getProductsUrl: 'products/getAll',

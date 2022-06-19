@@ -12,7 +12,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
-import { ReplaceUnderscorePipe } from '../shared/pipes/replace-underscore/replace-underscore.pipe';
 
 @NgModule({
   declarations: [

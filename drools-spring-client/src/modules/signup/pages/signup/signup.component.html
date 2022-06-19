@@ -1,0 +1,124 @@
+<h2 mat-dialog-title class="title">Crate new account</h2>
+<mat-dialog-content [formGroup]="signupForm" style="white-space: pre-line">
+  <mat-grid-list cols="2" rowHeight="6:1">
+    <!-- username -->
+    <mat-grid-tile>
+      <mat-form-field class="input">
+        <input
+          matInput
+          type="text"
+          formControlName="username"
+          id="username"
+          required
+          placeholder="Username"
+        />
+      </mat-form-field>
+    </mat-grid-tile>
+    <!-- password -->
+    <mat-grid-tile>
+      <mat-form-field class="input">
+        <input
+          matInput
+          type="text"
+          formControlName="password"
+          id="password"
+          required
+          placeholder="Password"
+        />
+      </mat-form-field>
+    </mat-grid-tile>
+    <!-- name -->
+    <mat-grid-tile>
+      <mat-form-field class="input">
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          id="name"
+          required
+          placeholder="Name"
+        />
+      </mat-form-field>
+    </mat-grid-tile>
+    <!-- surname -->
+    <mat-grid-tile>
+      <mat-form-field class="input">
+        <input
+          matInput
+          type="text"
+          formControlName="surname"
+          id="surname"
+          required
+          placeholder="Surname"
+        />
+      </mat-form-field>
+    </mat-grid-tile>
+    <!-- email -->
+    <mat-grid-tile>
+      <mat-form-field class="input">
+        <input
+          matInput
+          type="text"
+          formControlName="email"
+          id="email"
+          required
+          placeholder="Email"
+        />
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- birthday -->
+    <mat-grid-tile>
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>Birthday</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="birthday"
+          [max]="this.maxDate"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- gender -->
+    <mat-grid-tile>
+      <mat-form-field class="input">
+        <mat-label>Gender</mat-label>
+        <mat-select matInput formControlName="gender" required>
+          <mat-option value="MALE">Male</mat-option>
+          <mat-option value="FEMALE">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    mat-flat-button
+    color="accent"
+    type="submit"
+    class="submit-button"
+    (click)="cancel()"
+    id="cancel-button"
+  >
+    Cancel
+  </button>
+  <button
+    mat-stroked-button
+    color="accent"
+    type="submit"
+    class="submit-button"
+    (click)="saveEmployee()"
+    [disabled]="signupForm.invalid"
+    id="save-button"
+  >
+    Save
+  </button>
+</mat-dialog-actions>
