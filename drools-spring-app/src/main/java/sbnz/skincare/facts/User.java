@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import sbnz.skincare.dto.NewUserDTO;
 
 @Entity
 @Table(name = "system_user")
@@ -43,6 +44,23 @@ public class User implements UserDetails {
 
     public User() {
         super();
+    }
+
+    public User(String username, String password, String name, String surname, String email, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User(NewUserDTO dto, UserRole role) {
+        this.username = dto.getUsername();
+        this.name = dto.getName();
+        this.surname = dto.getSurname();
+        this.email = dto.getEmail();
+        this.role = role;
     }
 
     public Long getId() {

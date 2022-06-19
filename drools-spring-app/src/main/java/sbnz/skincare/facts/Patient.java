@@ -1,12 +1,14 @@
 package sbnz.skincare.facts;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import sbnz.skincare.dto.NewPatientDTO;
 import sbnz.skincare.facts.enumerations.Gender;
 
 @Entity
@@ -31,6 +33,18 @@ public class Patient extends User {
     @OneToMany(mappedBy = "patient")
     @JsonIgnore
     protected List<ProductReaction> productReactions;
+
+    public Patient() {
+        super();
+    }
+
+    public Patient(NewPatientDTO dto, UserRole role) {
+        super(dto, role);
+        this.birthday = dto.getBirthday();
+        this.gender = dto.getGender();
+        this.productReactions = new ArrayList<>();
+        this.routines = new ArrayList<>();
+    }
 
     public LocalDate getBirthday() {
         return birthday;
