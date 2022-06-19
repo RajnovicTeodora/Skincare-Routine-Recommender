@@ -7,6 +7,8 @@ import { MaterialModule } from '../root/material-module';
 import { ReplaceUnderscorePipe } from './pipes/replace-underscore/replace-underscore.pipe';
 import { PatientRoutinesTableComponent } from './components/patient-routines-table/patient-routines-table.component';
 import { RoutineProductsWithReactionComponent } from './components/routine-products-with-reaction/routine-products-with-reaction.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { RoutineProductsWithReactionComponent } from './components/routine-produ
     PatientRoutinesTableComponent,
     RoutineProductsWithReactionComponent,
     ReplaceUnderscorePipe,
+    ProductsComponent,
+    ProductCardComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,10 @@ import { RoutineProductsWithReactionComponent } from './components/routine-produ
     }),
     MaterialModule,
   ],
-  exports: [PatientRoutinesTableComponent, ReplaceUnderscorePipe],
+  exports: [
+    PatientRoutinesTableComponent,
+    ReplaceUnderscorePipe,
+    ProductsComponent,
+  ],
 })
 export class SharedModule {}

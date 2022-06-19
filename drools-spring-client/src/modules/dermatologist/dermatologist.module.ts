@@ -9,8 +9,7 @@ import { PatientRoutinesComponent } from './pages/patient-routines/patient-routi
 import { RoutineFormComponent } from './components/routine-form/routine-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { ProductsComponent } from './pages/products/products.component';
-import { ProductCardComponent } from './components/product-card/product-card.component';
+import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
 
 @NgModule({
@@ -19,8 +18,6 @@ import { AddProductFormComponent } from './components/add-product-form/add-produ
     PatientTableComponent,
     PatientRoutinesComponent,
     RoutineFormComponent,
-    ProductsComponent,
-    ProductCardComponent,
     AddProductFormComponent,
   ],
   imports: [

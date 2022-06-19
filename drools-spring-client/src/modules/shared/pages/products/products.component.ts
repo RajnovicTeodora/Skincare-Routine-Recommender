@@ -5,9 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/modules/auth/service/auth-service/auth.service';
 import { ProductWithIngredients } from 'src/modules/shared/models/product-with-ingredients';
 import { ProductService } from 'src/modules/shared/services/product-service/product.service';
-import { AddProductFormComponent } from '../../components/add-product-form/add-product-form.component';
+import { AddProductFormComponent } from '../../../dermatologist/components/add-product-form/add-product-form.component';
 
 @Component({
   selector: 'app-products',
@@ -15,6 +16,8 @@ import { AddProductFormComponent } from '../../components/add-product-form/add-p
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
+  role!: String | null;
+
   dataSource!: MatTableDataSource<ProductWithIngredients>;
   observable!: Observable<any>;
 
@@ -24,13 +27,15 @@ export class ProductsComponent implements OnInit {
     private productService: ProductService,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private autService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.productService.getAll().subscribe((response) => {
       this.setData(response.body);
     });
+    this.role = this.autService.getRole();
   }
 
   setData(data: ProductWithIngredients[]) {
@@ -42,6 +47,7 @@ export class ProductsComponent implements OnInit {
 
   onDeleted(id: Number) {
     /*
+    TODO, aslo check role
     this.productService.deleteProduct(id).subscribe({
       next: (success) => {
         this.toastr.success('Successfully deleted ' + success.name);

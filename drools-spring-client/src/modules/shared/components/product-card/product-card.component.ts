@@ -12,6 +12,9 @@ export class ProductCardComponent implements OnInit {
   @Input()
   product!: ProductWithIngredients;
 
+  @Input()
+  role!: String | null;
+
   @Output() deleteClicked = new EventEmitter();
 
   constructor(private helperService: HelperService) {}

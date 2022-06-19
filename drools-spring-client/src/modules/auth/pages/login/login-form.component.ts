@@ -64,9 +64,11 @@ export class LoginFormComponent implements OnInit {
         this.toastr.success('Successful login!');
         this.loginForm.reset();
         if (this.authService.getRole() == 'ADMIN') {
-          this.router.navigate(['skincare/admin']);
+          this.router.navigate(['/skincare/admin']);
         } else if (this.authService.getRole() == 'DERMATOLOGIST') {
-          this.router.navigate(['skincare/dermatologist']);
+          this.router.navigate(['/skincare/dermatologist']);
+        } else if (this.authService.getRole() == 'PATIENT') {
+          this.router.navigate(['/skincare/patient']);
         }
       },
       error: (error) => {

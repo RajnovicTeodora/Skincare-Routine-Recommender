@@ -20,6 +20,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'patient',
+        loadChildren: () =>
+          import('./../patient/patient.module').then((m) => m.PatientModule),
+      },
+      {
         path: 'auth',
         loadChildren: () =>
           import('./../auth/auth.module').then((m) => m.AuthModule),

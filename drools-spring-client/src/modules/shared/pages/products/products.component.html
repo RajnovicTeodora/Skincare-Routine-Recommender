@@ -1,4 +1,5 @@
 <button
+  *ngIf="role == 'DERMATOLOGIST'"
   mat-stroked-button
   color="accent"
   class="addBttn"
@@ -18,6 +19,7 @@
       <app-product-card
         id="{{ product.id }}"
         [product]="product"
+        [role]="role"
         (deleteClicked)="onDeleted($event)"
       >
       </app-product-card>
