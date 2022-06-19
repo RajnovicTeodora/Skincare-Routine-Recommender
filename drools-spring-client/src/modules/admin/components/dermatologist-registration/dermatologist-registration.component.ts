@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/modules/shared/models/user';
 import { DermatologistService } from 'src/modules/shared/services/dermatologist-service/dermatologist.service';
@@ -17,7 +18,8 @@ export class DermatologistRegistrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private dermatologistService: DermatologistService
+    private dermatologistService: DermatologistService,
+    private dialogRef: MatDialogRef<DermatologistRegistrationComponent>
   ) {
     this.dermatologistForm = this.fb.group({
       username: [
@@ -72,8 +74,9 @@ export class DermatologistRegistrationComponent implements OnInit {
     };
     console.log(user);
     this.dermatologistService.register(user).subscribe({
-      next: () => {
+      next: (success) => {
         this.toastr.success('Successfully added a new dermatologist');
+        this.dialogRef.close(success.body);
       },
       error: (error) => {
         this.toastr.error('Unable to add a new dermatologist');
@@ -83,6 +86,6 @@ export class DermatologistRegistrationComponent implements OnInit {
   }
 
   cancel() {
-    // TODO close dialog
+    this.dialogRef.close();
   }
 }

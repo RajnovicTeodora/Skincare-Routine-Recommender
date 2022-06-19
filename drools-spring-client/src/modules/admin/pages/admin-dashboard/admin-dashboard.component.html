@@ -54,9 +54,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      <app-dermatologist-registration
-        *ngIf="this.activeView === '1'"
-      ></app-dermatologist-registration>
+      <app-user-table *ngIf="this.activeView === '1'"></app-user-table>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

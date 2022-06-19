@@ -31,8 +31,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User save(User user) {
-        return this.userRepository.save(user);
+    public void save(User user) {
+        this.userRepository.save(user);
     }
 
+    public List<User> findAllExcludingCurrent(String username) {
+        return this.userRepository.findAllByUsernameNotLike(username);
+    }
 }

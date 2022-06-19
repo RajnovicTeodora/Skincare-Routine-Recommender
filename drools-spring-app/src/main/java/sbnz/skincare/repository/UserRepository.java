@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import sbnz.skincare.facts.User;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,5 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(@Param("username") String username);
 
+    List<User> findAllByUsernameNotLike(@Param("username") String username);
 }
 

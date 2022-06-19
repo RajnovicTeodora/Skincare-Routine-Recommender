@@ -22,7 +22,7 @@ public class DermatologistController {
     public DermatologistController(DermatologistService dermatologistService) {
         this.dermatologistService = dermatologistService;
     }
-    
+
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<UserDTO> register(@RequestBody NewUserDTO dto) {
         return new ResponseEntity<>(new UserDTO(this.dermatologistService.register(dto)), HttpStatus.OK);

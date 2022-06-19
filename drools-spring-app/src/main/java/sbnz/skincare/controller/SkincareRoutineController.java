@@ -32,12 +32,13 @@ public class SkincareRoutineController {
 
     @PostMapping("/getRoutineRecommendation")
     public ResponseEntity<RoutineWithReactionDTO> getRoutineRecommendation(
-            @RequestBody RequestRoutineDTO requestRoutineDTO) throws NotFoundException {
+            @RequestBody RequestRoutineDTO requestRoutineDTO) {
         Routine routine = this.skincareRoutineService.getRoutineRecommendation(requestRoutineDTO);
         return new ResponseEntity<>(new RoutineWithReactionDTO(routine), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getPatientRoutines/{username}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/getPatientRoutines/{username}",
+            method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<RoutineDTO>> findByPatientUsername(@PathVariable("username") String username) {
         List<RoutineDTO> routines = this.skincareRoutineService
                 .findByPatientUsername(username)

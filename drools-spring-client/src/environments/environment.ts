@@ -14,6 +14,7 @@ export const environment = {
   getProductsUrl: 'products/getAll',
   addProductUrl: 'products/addProduct',
   getIngredientsUrl: 'ingredients/getAll',
+  getUsersUrl: 'users/findAllExcludingCurrent',
 };
 
 /*
