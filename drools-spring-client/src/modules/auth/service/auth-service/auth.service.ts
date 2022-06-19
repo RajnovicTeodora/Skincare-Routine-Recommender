@@ -58,19 +58,8 @@ export class AuthService {
       );
   }
 
-  /*signup(user: any) {
-    const signupHeaders = new HttpHeaders({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    });
-    return this.apiService.post(this.config.signup_url, JSON.stringify(user), signupHeaders)
-      .pipe(map(() => {
-        console.log('Sign up success');
-      }));
-  }*/
-
   logout() {
-    //this.router.navigate(['skincare/login']);
+    return this.apiService.get(`${environment.baseUrl}/${environment.logout}`);
   }
 
   tokenIsPresent() {

@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   baseUrl: 'http://localhost:8080/api',
   login: 'auth/login',
+  logout: 'auth/logout',
   getPatientsUrl: 'patients/getAll',
   registerPatientUrl: 'patients/register',
   registerDermatologistUrl: 'dermatologists/register',

@@ -9,6 +9,7 @@ import { PatientRoutinesTableComponent } from './components/patient-routines-tab
 import { RoutineProductsWithReactionComponent } from './components/routine-products-with-reaction/routine-products-with-reaction.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     ReplaceUnderscorePipe,
     ProductsComponent,
     ProductCardComponent,
+    LogoutDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     PatientRoutinesTableComponent,
     ReplaceUnderscorePipe,
     ProductsComponent,
+    LogoutDialogComponent,
   ],
 })
 export class SharedModule {}

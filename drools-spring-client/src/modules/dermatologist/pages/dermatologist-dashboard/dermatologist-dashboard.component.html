@@ -70,3 +70,8 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<app-logout-dialog
+  *ngIf="this.showModalLogout"
+  (onLogoutClose)="onLogoutCloseClicked()"
+></app-logout-dialog>
