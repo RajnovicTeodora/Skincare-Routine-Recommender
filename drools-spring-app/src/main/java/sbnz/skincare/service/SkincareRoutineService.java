@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +20,6 @@ import javax.validation.constraints.NotNull;
 
 @Service
 public class SkincareRoutineService {
-
-    private static Logger log = LoggerFactory.getLogger(SkincareRoutineService.class);
 
     private final KieContainer kieContainer;
 
@@ -98,6 +94,7 @@ public class SkincareRoutineService {
         return this.routineRepository.findByPatientUsername(username);
     }
 
+    // Get patient routines with products with reactions
     public List<RoutineWithReactionDTO> findPatientRoutinesWithReaction(String username) {
         List<Routine> routines = findByPatientUsername(username);
         List<RoutineWithReactionDTO> routinesWithReaction = new ArrayList<>();

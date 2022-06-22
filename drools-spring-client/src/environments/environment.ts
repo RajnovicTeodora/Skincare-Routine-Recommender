@@ -8,6 +8,7 @@ export const environment = {
   login: 'auth/login',
   logout: 'auth/logout',
   getPatientsUrl: 'patients/getAll',
+  getPatientByUsernameUrl: 'patients/findByUsername',
   registerPatientUrl: 'patients/register',
   registerDermatologistUrl: 'dermatologists/register',
   getRoutinePerscriptionUrl: 'routine/getRoutineRecommendation',
@@ -16,6 +17,7 @@ export const environment = {
   addProductUrl: 'products/addProduct',
   getIngredientsUrl: 'ingredients/getAll',
   getUsersUrl: 'users/findAllExcludingCurrent',
+  editUserUrl: 'users/edit',
 };
 
 /*

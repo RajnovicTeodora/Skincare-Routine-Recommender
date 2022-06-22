@@ -4,13 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sbnz.skincare.dto.NewPatientDTO;
 import sbnz.skincare.dto.PatientDTO;
-import sbnz.skincare.facts.Patient;
 import sbnz.skincare.service.PatientService;
 
 import java.util.List;
@@ -39,5 +35,10 @@ public class PatientController {
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<PatientDTO> register(@RequestBody NewPatientDTO dto) {
         return new ResponseEntity<>(new PatientDTO(this.patientService.register(dto)), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/findByUsername/{username}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<PatientDTO> findByUsername(@PathVariable(value = "username") String username) {
+        return new ResponseEntity<>(new PatientDTO(this.patientService.findByUsername(username)), HttpStatus.OK);
     }
 }

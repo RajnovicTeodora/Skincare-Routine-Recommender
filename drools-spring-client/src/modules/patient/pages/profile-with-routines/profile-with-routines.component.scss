@@ -1,0 +1,39 @@
+.input {
+  width: 100%;
+}
+
+.containerInput {
+  width: 60%;
+  display: block;
+  justify-content: center;
+}
+
+.card-body {
+  font-size: large;
+  width: 100%;
+  padding-left: 20%;
+  padding-top: 5%;
+}
+
+.card-header {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-button {
+  margin-left: auto;
+  margin-right: 0;
+  padding: 10px;
+  padding-left: 50%;
+}
+
+.submit-button {
+  margin-left: auto;
+  margin-right: 0;
+  padding: 10px;
+  padding-left: 40%;
+}
+
+.title {
+  text-align: center;
+}

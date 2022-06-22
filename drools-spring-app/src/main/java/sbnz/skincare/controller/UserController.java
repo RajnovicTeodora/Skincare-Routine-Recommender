@@ -6,8 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sbnz.skincare.dto.EditUserDTO;
 import sbnz.skincare.dto.UserDTO;
 import sbnz.skincare.service.UserService;
 
@@ -33,5 +35,10 @@ public class UserController {
                 .stream()
                 .map(UserDTO::new).collect(Collectors.toList());
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<UserDTO> register(@RequestBody EditUserDTO dto) {
+        return new ResponseEntity<>(new UserDTO(this.userService.edit(dto)), HttpStatus.OK);
     }
 }

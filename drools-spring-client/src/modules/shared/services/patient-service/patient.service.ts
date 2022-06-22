@@ -21,4 +21,10 @@ export class PatientService {
       patient
     );
   }
+
+  getByUsername(username: String) {
+    return this.apiService.get(
+      `${environment.baseUrl}/${environment.getPatientByUsernameUrl}/${username}`
+    );
+  }
 }

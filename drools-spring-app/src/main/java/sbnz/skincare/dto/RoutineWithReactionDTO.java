@@ -1,5 +1,6 @@
 package sbnz.skincare.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import sbnz.skincare.facts.Routine;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class RoutineWithReactionDTO {
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate startDate;
 
     private List<ProductReactionDTO> productWithReaction;

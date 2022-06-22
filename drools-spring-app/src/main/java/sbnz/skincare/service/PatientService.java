@@ -1,11 +1,10 @@
 package sbnz.skincare.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sbnz.skincare.dto.NewPatientDTO;
+import sbnz.skincare.exception.EmailTakenException;
 import sbnz.skincare.exception.NotFoundException;
 import sbnz.skincare.exception.UsernameTakenException;
 import sbnz.skincare.facts.Patient;
@@ -17,8 +16,6 @@ import java.util.List;
 
 @Service
 public class PatientService {
-
-    private static Logger log = LoggerFactory.getLogger(PatientService.class);
 
     private final UserRoleRepository userRoleRepository;
 
@@ -50,6 +47,9 @@ public class PatientService {
     public Patient register(NewPatientDTO dto) {
         if (userService.findByUsername(dto.getUsername()) != null)
             throw new UsernameTakenException("Username already taken!");
+
+        if (this.userService.findByEmail(dto.getEmail()) != null)
+            throw new EmailTakenException(String.format("Email %s is already taken", dto.getEmail()));
 
         UserRole role = this.userRoleRepository.findByName("PATIENT").orElseThrow(NotFoundException::new);
         Patient patient = new Patient(dto, role);

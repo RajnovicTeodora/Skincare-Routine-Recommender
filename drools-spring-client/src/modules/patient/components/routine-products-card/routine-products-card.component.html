@@ -1,0 +1,14 @@
+<div mat-dialog-content>
+  <div class="row" *ngFor="let product of this.products">
+    <div class="block">
+      <img [src]="bypassUrlSecurity(product.image)" alt="" />
+      <div>
+        <h2>{{ product.name }}</h2>
+        <p>
+          {{ product.usageInstructions }}
+        </p>
+      </div>
+      <p>{{ product.reaction }}</p>
+    </div>
+  </div>
+</div>

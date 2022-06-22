@@ -6,9 +6,16 @@ import { PatientRoutes } from './patient.routes';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileWithRoutinesComponent } from './pages/profile-with-routines/profile-with-routines.component';
+import { RoutineProductsCardComponent } from './components/routine-products-card/routine-products-card.component';
 
 @NgModule({
-  declarations: [PatientDashboardComponent],
+  declarations: [
+    PatientDashboardComponent,
+    ProfileWithRoutinesComponent,
+    RoutineProductsCardComponent,
+    RoutineProductsCardComponent,
+  ],
   imports: [
     CommonModule,
     MaterialModule,

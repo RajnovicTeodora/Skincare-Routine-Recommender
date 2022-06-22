@@ -49,13 +49,18 @@
     <mat-divider></mat-divider>
 
     <mat-action-list>
-      <mat-list-item (click)="this.activeView = '1'"> Products </mat-list-item>
+      <mat-list-item (click)="this.activeView = '2'"> Products </mat-list-item>
+      <mat-list-item (click)="this.activeView = '1'"> Profile </mat-list-item>
     </mat-action-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      <app-products class="products" *ngIf="this.activeView === '1'">
+      <app-products class="products" *ngIf="this.activeView === '2'">
       </app-products>
+      <app-profile-with-routines
+        [username]="this.user.username"
+        *ngIf="this.activeView === '1'"
+      ></app-profile-with-routines>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
