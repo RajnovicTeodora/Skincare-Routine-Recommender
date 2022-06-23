@@ -28,11 +28,11 @@ public class Patient extends User {
 
     @OneToMany(mappedBy = "patient")
     @JsonIgnore
-    protected List<Routine> routines;
+    protected List<Routine> routines = new ArrayList<>();
 
     @OneToMany(mappedBy = "patient")
     @JsonIgnore
-    protected List<ProductReaction> productReactions;
+    protected List<ProductReaction> productReactions = new ArrayList<>();
 
     public Patient() {
         super();

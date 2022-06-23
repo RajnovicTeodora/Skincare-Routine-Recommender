@@ -18,6 +18,8 @@ export const environment = {
   getIngredientsUrl: 'ingredients/getAll',
   getUsersUrl: 'users/findAllExcludingCurrent',
   editUserUrl: 'users/edit',
+  suspiciousPatientsReportUrl: 'report/getFrequentRoutineChangeReport',
+  productReportUrl: 'report/getProductReport',
 };
 
 /*

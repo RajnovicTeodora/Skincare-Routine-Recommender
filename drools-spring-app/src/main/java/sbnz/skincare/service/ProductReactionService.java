@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sbnz.skincare.dto.NewProductReactionDTO;
-import sbnz.skincare.dto.ProductReactionDTO;
 import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.facts.Reaction;
 import sbnz.skincare.facts.drools.ReactionInput;
 import sbnz.skincare.repository.ProductReactionRepository;
+
+import java.util.List;
 
 @Service
 public class ProductReactionService {
@@ -68,5 +69,9 @@ public class ProductReactionService {
 
     public ProductReaction findByProductAndPatient(Long id, String username) {
         return this.productReactionRepository.findByProductIdAndPatientUsername(id, username).orElse(null);
+    }
+
+    public List<ProductReaction> getAll() {
+        return this.productReactionRepository.findAll();
     }
 }

@@ -16,12 +16,25 @@ INSERT INTO system_user (username, password, name, surname, email, role_id)
 VALUES ('lazar', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Lazar', 'Lazic', 'laza@example.com',
         2);
 
-INSERT INTO admin (id)
-VALUES (2);
+-- Sus users
+INSERT INTO system_user (username, password, name, surname, email, role_id)
+VALUES ('userSus1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sussy', 'Baka1', 'Sus1@example.com',
+        3);
+INSERT INTO system_user (username, password, name, surname, email, role_id)
+VALUES ('userSus2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sussy', 'Baka2', 'Sus2@example.com',
+        3);
+
 INSERT INTO patient (id, birthday, gender)
 VALUES (1, '2020-10-31', 'MALE');
+INSERT INTO admin (id)
+VALUES (2);
 INSERT INTO dermatologist (id)
 VALUES (3);
+
+INSERT INTO patient (id, birthday, gender)
+VALUES (4, '2020-10-30', 'FEMALE');
+INSERT INTO patient (id, birthday, gender)
+VALUES (5, '2020-10-29', 'MALE');
 
 -- Skin Type Characteristics
 INSERT INTO skin_type_characteristics (skin_type)
@@ -270,9 +283,51 @@ INSERT INTO routine (start_date, patient_id)
 VALUES ('2021-10-11', 1);
 INSERT INTO routine_product (routine_id, product_id)
 VALUES (2, 3);
+
+-- Sus user routines
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-10', 4);
 INSERT INTO routine_product (routine_id, product_id)
-VALUES (2, 4);
+VALUES (3, 1);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-11', 4);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (4, 2);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-12', 4);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (5, 3);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-13', 4);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (6, 4);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-10', 5);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (7, 1);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-10', 5);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (8, 2);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-10', 5);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (9, 3);
+
+INSERT INTO routine (start_date, patient_id)
+VALUES ('2021-10-10', 5);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (10, 4);
 
 -- Product Reactions
 INSERT INTO product_reaction (reaction, patient_id, product_id)
 VALUES ('Bad reaction', 1, 4);
+
+INSERT INTO product_reaction (reaction, patient_id, product_id)
+VALUES ('Bad reaction', 4, 4);

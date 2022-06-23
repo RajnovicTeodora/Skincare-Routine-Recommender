@@ -112,4 +112,8 @@ public class SkincareRoutineService {
         });
         return routinesWithReaction;
     }
+
+    public List<Routine> getAll() {
+        return this.routineRepository.findAll();
+    }
 }

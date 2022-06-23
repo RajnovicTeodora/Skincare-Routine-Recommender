@@ -51,12 +51,14 @@
     <mat-action-list>
       <mat-list-item (click)="this.activeView = '1'"> Users </mat-list-item>
       <mat-list-item (click)="this.activeView = '2'"> Products </mat-list-item>
+      <mat-list-item (click)="this.activeView = '3'"> Reports </mat-list-item>
     </mat-action-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      <app-user-table *ngIf="this.activeView === '1'"></app-user-table>
+      <app-user-table *ngIf="this.activeView === '3'"></app-user-table>
       <app-products *ngIf="this.activeView === '2'"></app-products>
+      <app-reports *ngIf="this.activeView === '1'"></app-reports>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
