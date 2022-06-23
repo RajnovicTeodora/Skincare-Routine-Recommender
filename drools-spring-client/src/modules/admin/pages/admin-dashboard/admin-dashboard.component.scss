@@ -58,12 +58,7 @@ mat-sidenav-container {
 .name {
   margin-top: 8px;
   font-weight: normal;
-}
-
-.designation {
-  margin-top: 2px;
-  font-size: 0.7rem;
-  color: lightgrey;
+  font-size: large;
 }
 
 mat-divider {
@@ -76,13 +71,7 @@ mat-divider {
   margin: auto;
   font-family: Times, "Times New Roman", Georgia, serif;
   font-size: 2rem;
-}
-
-img {
-  max-height: 800px;
-  max-width: 800px;
-  margin-left: 8px;
-  margin-bottom: 8px;
+  display: inline-flex;
 }
 
 mat-action-list {
@@ -98,16 +87,6 @@ mat-action-list {
   background: rgba(0, 0, 0, 0.26);
 }
 
-.areaBttn {
-  font-size: large;
-  margin-left: 15px;
-  margin-right: 15px;
-  width: 60%;
-  height: 50px;
-  margin-top: 10%;
-  margin-bottom: 10%;
-}
-
 .boundary {
   height: 95%;
   width: 75%;
@@ -116,24 +95,16 @@ mat-action-list {
   margin-left: 1%;
 }
 
-.claimedTableBttn {
-  border-style: solid;
-  border-color: hotpink;
-  height: 50px;
-  width: 65px;
-}
-
-.unclaimedTableBttn {
-  border-style: solid;
-  border-color: #424242;
-  height: 50px;
-  width: 65px;
-}
-
 .buttonsDiv {
   height: 90%;
   width: 25%;
   margin-top: 5%;
   margin-left: 1%;
   text-align: center;
+}
+
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  padding-right: 5px;
 }

@@ -7,7 +7,15 @@
     <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
     <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
   </button>
-  <span class="span">Skincare Recommender</span>
+  <span class="span"
+    ><img
+      class="logo-icon"
+      src="assets/images/logo.png"
+      alt="logo"
+      (click)="this.router.navigate([''])"
+    />
+    Sakura Skin Care</span
+  >
   <div
     fxShow="true"
     fxHide.lt-md="true"
@@ -18,13 +26,6 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <img
-      class="avatar mat-elevation-z8"
-      src="assets/images/logo.png"
-      alt="logo"
-      (click)="this.router.navigate([''])"
-    />
-
     <h4 class="name">{{ this.user.username }}</h4>
 
     <button
@@ -56,9 +57,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      <app-user-table *ngIf="this.activeView === '3'"></app-user-table>
+      <app-user-table *ngIf="this.activeView === '1'"></app-user-table>
       <app-products *ngIf="this.activeView === '2'"></app-products>
-      <app-reports *ngIf="this.activeView === '1'"></app-reports>
+      <app-reports *ngIf="this.activeView === '3'"></app-reports>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

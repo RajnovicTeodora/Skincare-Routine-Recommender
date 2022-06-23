@@ -34,6 +34,10 @@ public class PatientService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public List<Patient> getAllWithSearch(String search) {
+        return this.patientRepository.findAllAndSearch(search);
+    }
+
     public List<Patient> getAll() {
         return this.patientRepository.findAll();
     }

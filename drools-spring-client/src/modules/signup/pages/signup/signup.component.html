@@ -1,75 +1,67 @@
-<h2 mat-dialog-title class="title">Crate new account</h2>
-<mat-dialog-content [formGroup]="signupForm" style="white-space: pre-line">
-  <mat-grid-list cols="2" rowHeight="6:1">
-    <!-- username -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
+<div class="container">
+  <mat-card class="registration-card">
+    <mat-card-header mat-card-title class="title">
+      Registration
+    </mat-card-header>
+    <mat-card-content [formGroup]="signupForm" style="white-space: pre-line">
+      <!-- username -->
+      <mat-form-field class="input" color="accent">
         <input
           matInput
           type="text"
           formControlName="username"
-          id="username"
           required
           placeholder="Username"
         />
       </mat-form-field>
-    </mat-grid-tile>
-    <!-- password -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
+
+      <!-- password -->
+      <mat-form-field class="input" color="accent">
         <input
           matInput
           type="password"
           formControlName="password"
-          id="password"
           required
           placeholder="Password"
         />
       </mat-form-field>
-    </mat-grid-tile>
-    <!-- name -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
+
+      <!-- name -->
+      <mat-form-field class="input" color="accent">
         <input
           matInput
           type="text"
           formControlName="name"
-          id="name"
           required
           placeholder="Name"
         />
       </mat-form-field>
-    </mat-grid-tile>
-    <!-- surname -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
+
+      <!-- surname -->
+      <mat-form-field class="input" color="accent">
         <input
           matInput
           type="text"
           formControlName="surname"
-          id="surname"
           required
           placeholder="Surname"
         />
       </mat-form-field>
-    </mat-grid-tile>
-    <!-- email -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
+
+      <!-- email -->
+      <mat-form-field class="input" color="accent">
         <input
           matInput
           type="text"
           formControlName="email"
-          id="email"
           required
           placeholder="Email"
         />
       </mat-form-field>
-    </mat-grid-tile>
 
-    <!-- birthday -->
-    <mat-grid-tile>
-      <mat-form-field color="accent" appearance="fill">
+      <!-- birthday -->
+
+      <mat-form-field color="accent" class="input">
         <mat-label>Birthday</mat-label>
         <input
           matInput
@@ -84,41 +76,40 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
-    </mat-grid-tile>
 
-    <!-- gender -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
+      <!-- gender -->
+      <mat-form-field class="input" color="accent">
         <mat-label>Gender</mat-label>
         <mat-select matInput formControlName="gender" required>
           <mat-option value="MALE">Male</mat-option>
           <mat-option value="FEMALE">Female</mat-option>
         </mat-select>
       </mat-form-field>
-    </mat-grid-tile>
-  </mat-grid-list>
-</mat-dialog-content>
+    </mat-card-content>
 
-<mat-dialog-actions>
-  <button
-    mat-flat-button
-    color="accent"
-    type="submit"
-    class="submit-button"
-    (click)="cancel()"
-    id="cancel-button"
-  >
-    Cancel
-  </button>
-  <button
-    mat-stroked-button
-    color="accent"
-    type="submit"
-    class="submit-button"
-    (click)="savePatient()"
-    [disabled]="signupForm.invalid"
-    id="save-button"
-  >
-    Save
-  </button>
-</mat-dialog-actions>
+    <mat-card-actions class="card-buttons">
+      <button
+        mat-flat-button
+        color="accent"
+        type="submit"
+        class="submit-button"
+        (click)="cancel()"
+        id="cancel-button"
+      >
+        Cancel
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        type="submit"
+        class="submit-button"
+        (click)="savePatient()"
+        [disabled]="signupForm.invalid"
+        id="save-button"
+      >
+        Save
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="jw-modal-background"></div>

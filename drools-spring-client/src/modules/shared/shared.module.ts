@@ -7,7 +7,7 @@ import { MaterialModule } from '../root/material-module';
 import { ReplaceUnderscorePipe } from './pipes/replace-underscore/replace-underscore.pipe';
 import { PatientRoutinesTableComponent } from './components/patient-routines-table/patient-routines-table.component';
 import { RoutineProductsWithReactionComponent } from './components/routine-products-with-reaction/routine-products-with-reaction.component';
-import { ProductsComponent } from './pages/products/products.component';
+import { ProductsComponent } from './components/products/products.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
 

@@ -9,9 +9,10 @@ import { ApiService } from '../api-service/api.service';
 export class PatientService {
   constructor(private apiService: ApiService) {}
 
-  getAll() {
+  getAll(search?: String) {
     return this.apiService.get(
-      `${environment.baseUrl}/${environment.getPatientsUrl}`
+      `${environment.baseUrl}/${environment.getPatientsUrl}`,
+      { search: search }
     );
   }
 

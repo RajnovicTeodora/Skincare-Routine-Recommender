@@ -26,6 +26,8 @@ export class PatientTableComponent implements OnInit {
   dataSource!: MatTableDataSource<Patient>;
   messageForDialog = '';
 
+  searchForm: FormGroup;
+
   @Output() onPatientRoutinesClicked: EventEmitter<String> =
     new EventEmitter<String>();
 
@@ -50,12 +52,25 @@ export class PatientTableComponent implements OnInit {
     private liveAnnouncer: LiveAnnouncer
   ) {
     this.data = [];
+    this.searchForm = this.fb.group({
+      search: [''],
+    });
   }
 
   ngOnInit(): void {
     this.patientService.getAll().subscribe((response) => {
       this.setData(response.body);
     });
+  }
+
+  search() {
+    this.patientService
+      .getAll(this.searchForm.value.search)
+      .subscribe((response) => {
+        this.dataSource.data = response.body;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   setData(data: Patient[]) {

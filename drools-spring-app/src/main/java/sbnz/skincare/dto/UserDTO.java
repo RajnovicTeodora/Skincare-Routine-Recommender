@@ -8,6 +8,7 @@ public class UserDTO {
 	private String name;
 	private String surname;
 	private String email;
+	private String role;
 
 	public UserDTO(User user) {
 
@@ -15,18 +16,20 @@ public class UserDTO {
 		this.email = user.getEmail();
 		this.name = user.getName();
 		this.surname = user.getSurname();
+		this.role = user.getRole().getName();
 	}
 
 	public UserDTO() {
 		super();
 	}
 
-	public UserDTO(String username, String name, String surname, String email) {
+	public UserDTO(String username, String name, String surname, String email, String role) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
+		this.role = role;
 	}
 
 	public String getUsername() {
@@ -61,4 +64,11 @@ public class UserDTO {
 		this.email = email;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

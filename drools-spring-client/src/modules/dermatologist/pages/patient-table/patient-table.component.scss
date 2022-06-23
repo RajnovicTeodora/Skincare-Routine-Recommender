@@ -1,5 +1,5 @@
 table {
-  width: 100%;
+  width: 100% !important;
 }
 
 .example-form {
@@ -25,8 +25,4 @@ table {
   text-align: right;
   margin-right: 15px;
   margin-bottom: 10px;
-}
-
-mat-card {
-  height: 75%;
 }

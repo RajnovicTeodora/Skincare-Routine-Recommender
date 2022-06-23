@@ -1,4 +1,39 @@
+.product-card {
+  display: inline-block;
+  width: 100%;
+  min-height: 100%;
+  padding: 5%;
+  text-align: center;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+}
+
+.title {
+  font-size: medium;
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.content {
+  height: 50%;
+  max-height: 50%;
+  width: 100%;
+  overflow: hidden;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
 mat-list {
+  height: 100px;
+  min-height: 100px;
   max-height: 100px;
   overflow: auto;
   padding-bottom: 1.34375em;
@@ -10,15 +45,4 @@ mat-list {
 
 .custom-scroll-bar::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.26);
-}
-
-.custom-icon {
-  width: 30px;
-  height: 30px;
-
-  background-size: cover;
-
-  background-position: bottom center;
-
-  padding-right: 10px;
 }

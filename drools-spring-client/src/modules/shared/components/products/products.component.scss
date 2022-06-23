@@ -1,5 +1,5 @@
 .card-deck {
-  display: flex;
+  display: inline-flex;
 }
 
 .example-form {
@@ -15,8 +15,8 @@
   font-size: large;
 }
 
-.addBttn {
-  width: 20%;
-  margin-left: 10px;
-  // color: hotpink;
+.add-product {
+  margin-bottom: 10px;
+  float: right;
+  margin-top: 10px;
 }

@@ -1,97 +1,93 @@
-<h2 mat-dialog-title class="title">Crate new account</h2>
-<mat-dialog-content
-  [formGroup]="dermatologistForm"
-  style="white-space: pre-line"
->
-  <mat-grid-list cols="2" rowHeight="6:1">
+<div class="container">
+  <h2 mat-dialog-title class="title">Register a new dermatologist</h2>
+  <mat-dialog-content
+    class="registration-dialog"
+    [formGroup]="dermatologistForm"
+    style="white-space: pre-line"
+  >
     <!-- username -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
-        <input
-          matInput
-          type="text"
-          formControlName="username"
-          id="username"
-          required
-          placeholder="Username"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <!-- password -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
-        <input
-          matInput
-          type="password"
-          formControlName="password"
-          id="password"
-          required
-          placeholder="Password"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <!-- name -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
-        <input
-          matInput
-          type="text"
-          formControlName="name"
-          id="name"
-          required
-          placeholder="Name"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <!-- surname -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
-        <input
-          matInput
-          type="text"
-          formControlName="surname"
-          id="surname"
-          required
-          placeholder="Surname"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <!-- email -->
-    <mat-grid-tile>
-      <mat-form-field class="input">
-        <input
-          matInput
-          type="text"
-          formControlName="email"
-          id="email"
-          required
-          placeholder="Email"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-  </mat-grid-list>
-</mat-dialog-content>
+    <mat-form-field class="input">
+      <input
+        matInput
+        type="text"
+        formControlName="username"
+        id="username"
+        required
+        placeholder="Username"
+      />
+    </mat-form-field>
 
-<mat-dialog-actions>
-  <button
-    mat-flat-button
-    color="accent"
-    type="submit"
-    class="submit-button"
-    (click)="cancel()"
-    id="cancel-button"
-  >
-    Cancel
-  </button>
-  <button
-    mat-stroked-button
-    color="accent"
-    type="submit"
-    class="submit-button"
-    (click)="saveDermatologist()"
-    [disabled]="dermatologistForm.invalid"
-    id="save-button"
-  >
-    Save
-  </button>
-</mat-dialog-actions>
+    <!-- password -->
+
+    <mat-form-field class="input">
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        id="password"
+        required
+        placeholder="Password"
+      />
+    </mat-form-field>
+
+    <!-- name -->
+    <mat-form-field class="input">
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        id="name"
+        required
+        placeholder="Name"
+      />
+    </mat-form-field>
+
+    <!-- surname -->
+    <mat-form-field class="input">
+      <input
+        matInput
+        type="text"
+        formControlName="surname"
+        id="surname"
+        required
+        placeholder="Surname"
+      />
+    </mat-form-field>
+
+    <!-- email -->
+    <mat-form-field class="input">
+      <input
+        matInput
+        type="text"
+        formControlName="email"
+        id="email"
+        required
+        placeholder="Email"
+      />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-buttons">
+    <button
+      mat-flat-button
+      color="accent"
+      type="submit"
+      class="submit-button"
+      (click)="cancel()"
+      id="cancel-button"
+    >
+      Cancel
+    </button>
+    <button
+      mat-stroked-button
+      color="accent"
+      type="submit"
+      class="submit-button"
+      (click)="saveDermatologist()"
+      [disabled]="dermatologistForm.invalid"
+      id="save-button"
+    >
+      Save
+    </button>
+  </mat-dialog-actions>
+</div>

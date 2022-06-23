@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import sbnz.skincare.dto.NewPatientDTO;
 import sbnz.skincare.dto.PatientDTO;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/patients", produces = MediaType.APPLICATION_JSON_VALUE)
+@Transactional
 public class PatientController {
 
     private final PatientService patientService;
@@ -24,8 +26,9 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<PatientDTO>> getAll() {
-        List<PatientDTO> patients = this.patientService.getAll()
+    public ResponseEntity<List<PatientDTO>> getAll(
+            @RequestParam(name = "search", required = false, defaultValue = "") String search) {
+        List<PatientDTO> patients = this.patientService.getAllWithSearch(search)
                 .stream()
                 .map(PatientDTO::new).collect(Collectors.toList());
 

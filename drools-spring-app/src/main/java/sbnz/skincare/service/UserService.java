@@ -44,10 +44,11 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    public List<User> findAllExcludingCurrent(String username) {
-        return this.userRepository.findAllByUsernameNotLike(username);
-    }
+    public List<User> findAllExcludingCurrent(String username, String search, String role) {
 
+        return this.userRepository
+                .findAllByUsernameNotLikeAndSearch(username, search, role);
+    }
 
     public User edit(EditUserDTO dto) {
         Optional<User> maybeUser = this.userRepository.findByUsername(dto.getUsername());

@@ -3,8 +3,6 @@ package sbnz.skincare.dto;
 import sbnz.skincare.facts.Patient;
 import sbnz.skincare.facts.enumerations.Gender;
 
-import java.time.LocalDate;
-
 public class PatientDTO extends UserDTO {
 
     private String birthday;
@@ -15,13 +13,13 @@ public class PatientDTO extends UserDTO {
     }
 
     public PatientDTO(String username, String name, String surname, String email, String birthday, Gender gender) {
-        super(username, name, surname, email);
+        super(username, name, surname, email, "PATIENT");
         this.birthday = birthday;
         this.gender = gender;
     }
 
     public PatientDTO(Patient patient) {
-        super(patient.getUsername(), patient.getName(), patient.getSurname(), patient.getEmail());
+        super(patient.getUsername(), patient.getName(), patient.getSurname(), patient.getEmail(), "PATIENT");
         this.birthday = patient.getBirthday().toString();
         this.gender = patient.getGender();
     }
