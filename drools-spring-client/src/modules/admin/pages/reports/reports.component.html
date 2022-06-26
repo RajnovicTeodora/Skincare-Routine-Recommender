@@ -1,5 +1,6 @@
 <div>
   <app-product-report
+    *ngIf="this.productReport"
     [bestProduct]="this.productReport.bestProduct"
     [worstProduct]="this.productReport.worstProduct"
   ></app-product-report>

@@ -100,12 +100,17 @@ export class RoutineFormComponent implements OnInit {
 
     this.routineService.getRoutinePerscription(routineInput).subscribe({
       next: (success) => {
+        if (success.body.productWithReaction.length <= 0) {
+          this.toastr.error('Unable to perscribe a new routine');
+          this.dialogRef.close();
+          return;
+        }
         this.toastr.success('Successfully perscribed a new routine!');
-        console.log(success.body);
         this.dialogRef.close(success.body);
       },
       error: (error) => {
-        this.toastr.error('Unable to add new item');
+        this.toastr.error('Unable to perscribe a new routine');
+        this.dialogRef.close();
         console.log(error);
       },
     });

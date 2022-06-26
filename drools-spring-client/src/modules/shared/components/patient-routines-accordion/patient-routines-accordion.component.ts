@@ -33,7 +33,6 @@ export class PatientRoutinesAccordionComponent implements OnInit {
         this.setData(response.body);
       },
       error: (error) => {
-        //TODO toastr
         console.log(error);
       },
     });

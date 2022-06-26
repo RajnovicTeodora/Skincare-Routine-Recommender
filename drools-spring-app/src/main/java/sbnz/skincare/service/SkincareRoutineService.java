@@ -83,6 +83,8 @@ public class SkincareRoutineService {
         kSession.fireAllRules();
         kSession.dispose();
 
+        if(routine.getProducts().size() <= 0)
+        	return routine;
         // Save to database
         this.routineRepository.save(routine);
         this.patientService.save(patient);

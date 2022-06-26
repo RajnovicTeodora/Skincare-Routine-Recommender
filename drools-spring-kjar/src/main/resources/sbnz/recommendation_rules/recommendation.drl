@@ -125,37 +125,21 @@ rule "Ingredients Scoring"
 end 
 // ==================
 
-// ========= Rules to remove products containing allergens =========
-rule "Remove products with allergen"
+// ========= Rules to remove products containing allergens or unwanted products =========
+rule "Remove products with allergen or product with reported reaction"
 	
 	salience 2
 	when 
 		$p: Product($productName: name, $manufacturer: manufacturer, $ingredients: ingredients)
-		$r: RecommendationInput($allergies: allergies)
-
-        exists( Ingredient(name memberOf $allergies) from $ingredients )         	
-        
-	then 
-		System.out.println("Remove product containing alergen: " + $productName);
-		delete($p)
-end
-// ==================
-
-// ========= Rules to remove products with bad reaction =========
-rule "Remove products with reaction"
-	
-	salience 1
-	when 
-		$p: Product($productName: name)
-		$r: RecommendationInput($productReactions: productReactions)
+		$r: RecommendationInput($allergies: allergies, $productReactions: productReactions)
 		$productReactionIds: List() from accumulate (
-	        ProductReaction($product: product) from $productReactions,
-	        collectList($product.getId())
-	    )
-        exists( Product(id memberOf $productReactionIds) from $p )         	
+			        ProductReaction($product: product) from $productReactions,
+			        collectList($product.getId())
+			    )
+        exists( Ingredient(name memberOf $allergies) from $ingredients or Product(id memberOf $productReactionIds) from $p)         	
         
 	then 
-		System.out.println("Remove product containing reaction: " + $productName);
+		System.out.println("Remove product containing alergen or bad reaction: " + $productName);
 		delete($p)
 end
 // ==================
@@ -249,7 +233,7 @@ rule "Select best SERUM"
 end
 
 
-rule "Select best SUN_SCREEN"
+rule "Select best SUN SCREEN"
 
 	salience (-100/$score)
 	no-loop 

@@ -10,10 +10,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import sbnz.skincare.security.RestAuthenticationEntryPoint;
+import sbnz.skincare.security.TokenAuthenticationFilter;
 import sbnz.skincare.security.TokenAuthenticationProvider;
 import sbnz.skincare.security.util.TokenUtils;
 import sbnz.skincare.service.CustomUserDetailsService;
@@ -62,12 +65,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                 .disable()
-                //.exceptionHandling()
-                //.authenticationEntryPoint(this.restAuthenticationEntryPoint)
-                //.and()
-                //.sessionManagement()
-                //.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                //.and()
+                .exceptionHandling()
+                .authenticationEntryPoint(this.restAuthenticationEntryPoint)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST).permitAll()
                 .antMatchers(HttpMethod.GET).permitAll()
@@ -80,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors();
 
-		/*
+
 		http
 				
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -94,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						BasicAuthenticationFilter.class);
 		http.csrf().disable();
 		http.headers().xssProtection().and().contentSecurityPolicy("script-src 'self'");
-		*/
+
     }
 
     @Override

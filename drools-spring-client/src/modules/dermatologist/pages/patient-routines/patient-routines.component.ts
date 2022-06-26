@@ -35,9 +35,10 @@ export class PatientRoutinesComponent implements OnInit {
     instance.username = this.username;
     dialogRef.afterClosed().subscribe({
       next: (result) => {
-        this.patientRoutinesAccordionComponent.updateData(
-          result as RoutineWithReaction
-        );
+        if (result != null)
+          this.patientRoutinesAccordionComponent.updateData(
+            result as RoutineWithReaction
+          );
       },
       error: (error) => {
         this.toastr.error('Unable to create new routine');
