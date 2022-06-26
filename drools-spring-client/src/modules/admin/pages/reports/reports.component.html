@@ -1,4 +1,8 @@
 <div>
+  <app-product-report
+    [bestProduct]="this.productReport.bestProduct"
+    [worstProduct]="this.productReport.worstProduct"
+  ></app-product-report>
   <app-suspicious-patients-report
     *ngIf="this.susPatients"
     [data]="this.susPatients"
