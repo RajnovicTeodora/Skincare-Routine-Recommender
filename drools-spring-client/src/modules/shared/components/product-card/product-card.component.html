@@ -33,17 +33,14 @@
         </mat-list-item>
       </mat-list>
     </mat-card-content>
-    <mat-card-actions
-      *ngIf="this.role != 'PATIENT'"
-      color="accent"
-      style="padding: 0"
-    >
+    <mat-card-actions color="accent" style="padding: 0">
       <button
+        *ngIf="this.role == 'PATIENT' && (hasReaction | async)"
         mat-stroked-button
-        (click)="deleteItem(this.product.id)"
+        (click)="addReaction()"
         color="accent"
       >
-        Delete
+        Add reaction
       </button>
     </mat-card-actions>
   </mat-card>

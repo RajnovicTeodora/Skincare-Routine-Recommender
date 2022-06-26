@@ -39,35 +39,43 @@ export class AddProductFormComponent implements OnInit {
     this.addProductForm = this.fb.group({
       name: [
         null,
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(15),
-        Validators.pattern(this.regex),
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+          Validators.pattern(this.regex),
+        ],
       ],
       productType: [
         null,
-        Validators.required,
-        Validators.pattern('CLEANSER|EXFOLIATOR|SERUM|SUN_SCREEN|MOISTURIZER'),
+        [
+          Validators.required,
+          Validators.pattern(
+            'CLEANSER|EXFOLIATOR|SERUM|SUN_SCREEN|MOISTURIZER'
+          ),
+        ],
       ],
       manufacturer: [
         null,
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20),
-        Validators.pattern(this.regex),
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          Validators.pattern(this.regex),
+        ],
       ],
       usageInstructions: [
         null,
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(120),
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(120),
+        ],
       ],
       //image: [null, Validators.required],
       price: [
         null,
-        Validators.required,
-        Validators.min(0.1),
-        Validators.max(999.99),
+        [Validators.required, Validators.min(0.1), Validators.max(999.99)],
       ],
       ingredients: [null, Validators.required],
     });

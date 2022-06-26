@@ -52,16 +52,21 @@
     <mat-action-list>
       <mat-list-item (click)="this.activeView = '2'"> Products </mat-list-item>
       <mat-list-item (click)="this.activeView = '1'"> Profile </mat-list-item>
+      <mat-list-item (click)="this.activeView = '3'"> Routines </mat-list-item>
     </mat-action-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
       <app-products class="products" *ngIf="this.activeView === '2'">
       </app-products>
-      <app-profile-with-routines
+      <app-profile
         [username]="this.user.username"
         *ngIf="this.activeView === '1'"
-      ></app-profile-with-routines>
+      ></app-profile>
+      <app-patient-routines-accordion
+        *ngIf="this.activeView === '3'"
+        [username]="this.user.username"
+      ></app-patient-routines-accordion>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

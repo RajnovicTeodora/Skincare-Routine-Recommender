@@ -10,14 +10,19 @@
 
 .card-body {
   font-size: large;
-  width: 100%;
-  padding-left: 20%;
-  padding-top: 5%;
+  text-align: -webkit-center;
+  display: block;
+  margin-top: 12%;
+
+  /* justify-content: left; */
+  align-items: flex-start;
+  color: black;
 }
 
 .card-header {
   display: flex;
   justify-content: center;
+  padding-top: 5%;
 }
 
 .edit-button {
@@ -28,10 +33,15 @@
 }
 
 .submit-button {
-  margin-left: auto;
-  margin-right: 0;
-  padding: 10px;
+  //margin-left: auto;
+  //margin-right: 0;
+  //padding: 10px;
+  margin-top: -10px;
   padding-left: 40%;
+
+  button {
+    margin-left: 5px;
+  }
 }
 
 .title {

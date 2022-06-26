@@ -1,0 +1,20 @@
+<div class="col-md-12">
+  <label>Routines</label>
+  <div class="example-action-buttons">
+    <button mat-button (click)="accordion.openAll()">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  </div>
+  <mat-accordion class="containerInput" multi>
+    <mat-expansion-panel *ngFor="let routine of this.routines">
+      <mat-expansion-panel-header>
+        <mat-panel-title
+          >Routine start date: {{ routine.startDate }}</mat-panel-title
+        >
+      </mat-expansion-panel-header>
+
+      <app-routine-products-card
+        [products]="routine.productWithReaction"
+      ></app-routine-products-card>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ReccomendRoutine } from 'src/modules/shared/models/recommend-routine';
 import { Select } from 'src/modules/shared/models/select';
+import { IngredientService } from 'src/modules/shared/services/ingredient-service/ingredient.service';
 import { RoutineService } from 'src/modules/shared/services/routine-service/routine.service';
 
 @Component({
@@ -48,43 +49,44 @@ export class RoutineFormComponent implements OnInit {
     { value: 'NODULES', viewValue: 'Nodules' },
   ];
 
-  allergies: Array<String>;
+  allergens: Array<String>;
 
-  findAllergyIndex(allergyToBeFound: String) {
-    return this.allergies.indexOf(allergyToBeFound);
-  }
-
-  deleteAllergy(allergyToBeDeleted: String) {
-    const index = this.findAllergyIndex(allergyToBeDeleted);
-    if (index != -1) delete this.allergies[index];
-  }
-
-  addAllergy() {
-    const allergyToBeAdded: String = this.routineForm.value.allergy;
-    if (allergyToBeAdded === null || allergyToBeAdded.match(/^ *$/) !== null)
-      return;
-    const index = this.findAllergyIndex(allergyToBeAdded);
-    if (index == -1) this.allergies.push(allergyToBeAdded);
-    this.routineForm.value.allergy = '';
-  }
+  regex = '^(?!<.+?>).*$';
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private routineService: RoutineService,
+    private ingredientService: IngredientService,
     private dialogRef: MatDialogRef<RoutineFormComponent>
   ) {
     this.routineForm = this.fb.group({
       skinCharacteristics: [null, Validators.required],
       wantedGoals: [null, Validators.required],
       acneType: [null, Validators.required],
-      allergy: [null],
-      manufacturer: [null, Validators.required],
+      allergies: [null],
+      manufacturer: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          Validators.pattern(this.regex),
+        ],
+      ],
     });
-    this.allergies = new Array<String>();
+    this.allergens = new Array<String>();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.ingredientService.getAll().subscribe({
+      next: (value) => {
+        value.body.forEach((element: any) => {
+          this.allergens.push(element.name);
+        });
+      },
+    });
+  }
 
   getRoutineRecommendation() {
     const routineInput: ReccomendRoutine = {
@@ -92,7 +94,7 @@ export class RoutineFormComponent implements OnInit {
       skinCharacteristics: this.routineForm.value.skinCharacteristics,
       wantedGoals: this.routineForm.value.wantedGoals,
       acneType: this.routineForm.value.acneType,
-      allergies: this.allergies,
+      allergies: this.routineForm.value.allergies,
       manufacturer: this.routineForm.value.manufacturer,
     };
 

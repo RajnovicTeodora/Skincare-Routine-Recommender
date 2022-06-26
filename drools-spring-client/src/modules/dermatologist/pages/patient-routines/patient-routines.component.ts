@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { PatientRoutinesTableComponent } from 'src/modules/shared/components/patient-routines-table/patient-routines-table.component';
+import { PatientRoutinesAccordionComponent } from 'src/modules/shared/components/patient-routines-accordion/patient-routines-accordion.component';
 import { RoutineWithReaction } from 'src/modules/shared/models/routine-with-reaction';
 import { RoutineFormComponent } from '../../components/routine-form/routine-form.component';
 
@@ -15,14 +14,10 @@ export class PatientRoutinesComponent implements OnInit {
   @Input()
   username!: String | null;
 
-  @ViewChild(PatientRoutinesTableComponent)
-  patientRoutinesTableComponent!: PatientRoutinesTableComponent;
+  @ViewChild(PatientRoutinesAccordionComponent)
+  patientRoutinesAccordionComponent!: PatientRoutinesAccordionComponent;
 
-  constructor(
-    //private itemService: ItemService,
-    private toastr: ToastrService,
-    private dialog: MatDialog
-  ) {}
+  constructor(private toastr: ToastrService, private dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
@@ -32,15 +27,15 @@ export class PatientRoutinesComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '50%';
-    dialogConfig.height = '70%';
+    dialogConfig.width = '36%';
+    dialogConfig.height = '65%';
 
     const dialogRef = this.dialog.open(RoutineFormComponent, dialogConfig);
     let instance = dialogRef.componentInstance;
     instance.username = this.username;
     dialogRef.afterClosed().subscribe({
       next: (result) => {
-        this.patientRoutinesTableComponent.updateData(
+        this.patientRoutinesAccordionComponent.updateData(
           result as RoutineWithReaction
         );
       },

@@ -17,6 +17,7 @@ import { AddProductFormComponent } from '../../../dermatologist/components/add-p
 })
 export class ProductsComponent implements OnInit {
   role!: String | null;
+  username!: string;
 
   dataSource!: MatTableDataSource<ProductWithIngredients>;
   observable!: Observable<any>;
@@ -36,6 +37,7 @@ export class ProductsComponent implements OnInit {
       this.setData(response.body);
     });
     this.role = this.autService.getRole();
+    this.username = this.autService.getUsername();
   }
 
   setData(data: ProductWithIngredients[]) {
@@ -73,12 +75,13 @@ export class ProductsComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
-    dialogConfig.height = '70%';
+    dialogConfig.height = '85%';
 
     const dialogRef = this.dialog.open(AddProductFormComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe({
       next: (result) => {
+        if (result == null) return;
         const data = this.dataSource.data;
         data.push(result.body as ProductWithIngredients);
         console.log(result.body);

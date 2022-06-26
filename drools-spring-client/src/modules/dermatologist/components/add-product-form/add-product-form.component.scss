@@ -1,13 +1,24 @@
-.nameInput {
-  width: 60%;
-  height: 20%;
-}
-
-.selectInput {
-  width: 60%;
+.input {
+  width: 80%;
   height: 20%;
 }
 
 .title {
   text-align: center;
+}
+
+.img-space {
+  width: 100%;
+  text-align: center;
+}
+
+.add-product {
+  margin-bottom: 10px;
+  float: right;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
 }

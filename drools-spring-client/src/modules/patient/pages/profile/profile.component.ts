@@ -3,22 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import { ToastrService } from 'ngx-toastr';
 import { Patient } from 'src/modules/shared/models/patient';
-import { RoutineWithReaction } from 'src/modules/shared/models/routine-with-reaction';
 import { User } from 'src/modules/shared/models/user';
 import { PatientService } from 'src/modules/shared/services/patient-service/patient.service';
-import { RoutineService } from 'src/modules/shared/services/routine-service/routine.service';
 import { UserService } from 'src/modules/shared/services/user-service/user.service';
 
 @Component({
-  selector: 'app-profile-with-routines',
-  templateUrl: './profile-with-routines.component.html',
-  styleUrls: ['./profile-with-routines.component.scss'],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
 })
-export class ProfileWithRoutinesComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   @Input()
   username!: String;
   patient!: Patient;
-  routines!: Array<RoutineWithReaction>;
 
   editForm!: FormGroup;
   editMode = false;
@@ -27,7 +24,6 @@ export class ProfileWithRoutinesComponent implements OnInit {
 
   constructor(
     private patientService: PatientService,
-    private routineService: RoutineService,
     private userService: UserService,
     private fb: FormBuilder,
     private toastr: ToastrService
@@ -69,16 +65,6 @@ export class ProfileWithRoutinesComponent implements OnInit {
       },
       error: (error) => {
         // TODO toastr
-        console.log(error);
-      },
-    });
-
-    this.routineService.getRoutinesWithReaction(this.username).subscribe({
-      next: (value) => {
-        this.routines = value.body as Array<RoutineWithReaction>;
-        this.routines.sort((a, b) => (a.startDate > b.startDate ? -1 : 1));
-      },
-      error: (error) => {
         console.log(error);
       },
     });

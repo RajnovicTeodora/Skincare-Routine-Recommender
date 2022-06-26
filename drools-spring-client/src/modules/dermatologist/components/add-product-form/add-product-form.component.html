@@ -1,132 +1,132 @@
-<h2 mat-dialog-title class="title">Add new product</h2>
-<mat-dialog-content [formGroup]="addProductForm">
-  <mat-grid-list cols="2" rowHeight="3:1">
-    <mat-grid-tile rowspan="3">
-      <div class="img-space">
-        <ng-container *ngIf="isImageSaved; else elseTemplate">
-          <img
-            style="max-width: 50%; max-height: 50%"
-            [src]="url"
-            alt="Image"
+<div>
+  <h2 mat-dialog-title class="title">Add new product</h2>
+  <mat-dialog-content [formGroup]="addProductForm">
+    <mat-grid-list cols="2" rowHeight="3:1">
+      <mat-grid-tile rowspan="2">
+        <div class="img-space">
+          <ng-container *ngIf="isImageSaved; else elseTemplate">
+            <img
+              style="max-width: 50%; max-height: 50%"
+              [src]="url"
+              alt="Image"
+            />
+          </ng-container>
+          <ng-template #elseTemplate>
+            <img
+              style="max-width: 50%; max-height: 50%"
+              src="assets/images/6075452.png"
+              class="img-responsive"
+              alt="Default image"
+            />
+          </ng-template>
+          <input
+            class="input"
+            accept=".png, .jpg"
+            type="file"
+            id="file-upload"
+            (change)="fileChangeEvent($event)"
+            #fileInput
           />
-        </ng-container>
-        <ng-template #elseTemplate>
-          <img
-            style="max-width: 50%; max-height: 50%"
-            src="assets/images/6075452.png"
-            class="img-responsive"
-            alt="Default image"
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="input">
+          <input
+            matInput
+            type="text"
+            formControlName="name"
+            required
+            placeholder="Name"
           />
-        </ng-template>
-        <input
-          accept=".png, .jpg"
-          type="file"
-          id="file-upload"
-          (change)="fileChangeEvent($event)"
-          #fileInput
-        />
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field id="name" class="nameInput">
-        <input
-          matInput
-          type="text"
-          formControlName="name"
-          id="name-field"
-          required
-          placeholder="Name"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field id="manufacturer" class="manufacturer">
-        <input
-          matInput
-          type="text"
-          formControlName="manufacturer"
-          id="manufacturer-field"
-          required
-          placeholder="Manufacturer"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field id="usageInstructions" class="usageInstructions">
-        <input
-          matInput
-          type="text"
-          formControlName="usageInstructions"
-          id="usageInstructions-field"
-          required
-          placeholder="Usage Instructions"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field class="price">
-        <input
-          matInput
-          type="number"
-          min="0.1"
-          step="0.1"
-          max="999.99"
-          formControlName="price"
-          id="price-field"
-          required
-          placeholder="Price"
-        />
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field class="selectInput">
-        <mat-label>Type</mat-label>
-        <mat-select formControlName="productType">
-          <mat-option
-            *ngFor="let productType of productTypes"
-            [value]="productType.value"
-          >
-            {{ productType.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="input">
+          <input
+            matInput
+            type="text"
+            formControlName="manufacturer"
+            required
+            placeholder="Manufacturer"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="input">
+          <input
+            matInput
+            type="text"
+            formControlName="usageInstructions"
+            required
+            placeholder="Usage Instructions"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="input">
+          <input
+            matInput
+            type="number"
+            min="0.1"
+            step="0.1"
+            max="999.99"
+            formControlName="price"
+            required
+            placeholder="Price"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="input">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="productType">
+            <mat-option
+              *ngFor="let productType of productTypes"
+              [value]="productType.value"
+            >
+              {{ productType.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
 
-    <mat-grid-tile>
-      <mat-form-field class="selectInput">
-        <mat-label>Ingredients</mat-label>
-        <mat-select formControlName="ingredients" [multiple]="true">
-          <mat-option
-            *ngFor="let ingredientSelect of ingredientsSelect"
-            [value]="ingredientSelect.value"
-          >
-            {{ ingredientSelect.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
-  </mat-grid-list>
-</mat-dialog-content>
+      <mat-grid-tile>
+        <mat-form-field class="input">
+          <mat-label>Ingredients</mat-label>
+          <mat-select formControlName="ingredients" [multiple]="true">
+            <mat-option
+              *ngFor="let ingredientSelect of ingredientsSelect"
+              [value]="ingredientSelect.value"
+            >
+              {{ ingredientSelect.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button
-    mat-flat-button
-    color="accent"
-    type="submit"
-    class="submit-button"
-    (click)="cancel()"
-    id="cancel-button"
-  >
-    Cancel
-  </button>
-  <button
-    mat-flat-button
-    color="accent"
-    type="submit"
-    class="submit-button"
-    (click)="saveProduct()"
-    [disabled]="addProductForm.invalid || !this.isImageSaved"
-  >
-    Save
-  </button>
-</mat-dialog-actions>
+  <mat-dialog-actions>
+    <div class="add-product">
+      <button
+        mat-flat-button
+        color="accent"
+        type="submit"
+        class="submit-button"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        color="accent"
+        type="submit"
+        class="submit-button"
+        (click)="saveProduct()"
+        [disabled]="addProductForm.invalid || !this.isImageSaved"
+      >
+        Save
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

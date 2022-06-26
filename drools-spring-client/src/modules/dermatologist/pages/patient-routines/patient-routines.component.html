@@ -1,11 +1,13 @@
-<button
-  mat-stroked-button
-  color="accent"
-  id="get-routine-button"
-  (click)="openDialog()"
->
-  <mat-icon>add</mat-icon>
-  Perscribe routine
-</button>
-<app-patient-routines-table [username]="this.username">
-</app-patient-routines-table>
+<div>
+  <button
+    mat-raised-button
+    color="accent"
+    class="add-routine"
+    (click)="openDialog()"
+  >
+    <mat-icon>add</mat-icon>
+    Perscribe routine
+  </button>
+  <app-patient-routines-accordion [username]="this.username">
+  </app-patient-routines-accordion>
+</div>
