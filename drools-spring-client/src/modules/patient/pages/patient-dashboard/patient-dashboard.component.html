@@ -31,15 +31,6 @@
     <button
       mat-button
       class="menu-button"
-      (click)="onPasswordChangeButtonClicked()"
-    >
-      <mat-icon>settings</mat-icon>
-      <span>Change password</span>
-    </button>
-
-    <button
-      mat-button
-      class="menu-button"
       (click)="onLogoutButtonClicked()"
       id="logout-button"
     >
@@ -50,18 +41,18 @@
     <mat-divider></mat-divider>
 
     <mat-action-list>
-      <mat-list-item (click)="this.activeView = '2'"> Products </mat-list-item>
-      <mat-list-item (click)="this.activeView = '1'"> Profile </mat-list-item>
+      <mat-list-item (click)="this.activeView = '1'"> Products </mat-list-item>
+      <mat-list-item (click)="this.activeView = '2'"> Profile </mat-list-item>
       <mat-list-item (click)="this.activeView = '3'"> Routines </mat-list-item>
     </mat-action-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      <app-products class="products" *ngIf="this.activeView === '2'">
+      <app-products class="products" *ngIf="this.activeView === '1'">
       </app-products>
       <app-profile
         [username]="this.user.username"
-        *ngIf="this.activeView === '1'"
+        *ngIf="this.activeView === '2'"
       ></app-profile>
       <app-patient-routines-accordion
         *ngIf="this.activeView === '3'"

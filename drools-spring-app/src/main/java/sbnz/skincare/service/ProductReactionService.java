@@ -51,34 +51,12 @@ public class ProductReactionService {
             kSession.insert(reaction);
         }
 
-        /*
-        Reaction r1 = new Reaction("Bad reaction", "Allergy");
-        Reaction r2 = new Reaction("Bad reaction", "No progress");
-        Reaction r3 = new Reaction("Alergy", "Anaphylaxis");
-        Reaction r4 = new Reaction("Alergy", "Rash");
-        Reaction r5 = new Reaction("No progress", "Condition worsening");
-        Reaction r6 = new Reaction("No progress", "Breakouts");
-        Reaction r7 = new Reaction("Anaphylaxis", "Difficulty breathing");
-        Reaction r8 = new Reaction("Anaphylaxis", "Swelling");
-        Reaction r9 = new Reaction("Rash", "Severe itching");
-        Reaction r10 = new Reaction("Rash", "Red patches");
-        */
         ReactionInput advice = new ReactionInput("Bad reaction", dto.getSymptom());
         ProductReaction reaction = new ProductReaction(null, null, null);
 
         kSession.insert(reaction);
         kSession.insert(advice);
-
-        /*kSession.insert(r1);
-        kSession.insert(r2);
-        kSession.insert(r3);
-        kSession.insert(r4);
-        kSession.insert(r5);
-        kSession.insert(r6);
-        kSession.insert(r7);
-        kSession.insert(r8);
-        kSession.insert(r9);
-        kSession.insert(r10);*/
+        
         kSession.fireAllRules();
         kSession.dispose();
 
@@ -90,8 +68,6 @@ public class ProductReactionService {
 
         patient.getProductReactions().add(reaction);
         patientService.save(patient);
-
-        System.out.println(reaction.getReaction());
 
         return productReactionRepository.save(reaction);
     }

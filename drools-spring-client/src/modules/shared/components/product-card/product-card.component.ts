@@ -72,7 +72,7 @@ export class ProductCardComponent implements OnInit {
             // TODO toastr
           } else {
             this.hasReaction = new Observable((observer) =>
-              observer.next(false)
+              observer.next(true)
             );
           }
         },

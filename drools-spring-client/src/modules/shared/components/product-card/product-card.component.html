@@ -35,7 +35,7 @@
     </mat-card-content>
     <mat-card-actions color="accent" style="padding: 0">
       <button
-        *ngIf="this.role == 'PATIENT' && (hasReaction | async)"
+        *ngIf="this.role == 'PATIENT' && !(hasReaction | async)"
         mat-stroked-button
         (click)="addReaction()"
         color="accent"

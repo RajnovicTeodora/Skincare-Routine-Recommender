@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
             ],
           ],
           birthday: [this.patient.birthday],
-          gender: [this.patient.username],
+          gender: [this.patient.gender.toLowerCase()],
         });
       },
       error: (error) => {

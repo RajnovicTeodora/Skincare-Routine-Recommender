@@ -28,7 +28,7 @@ import { ReactionDialogComponent } from './components/reaction-dialog/reaction-d
     HttpClientModule,
     MaterialModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 6000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
