@@ -5,21 +5,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../root/material-module';
 import { ReplaceUnderscorePipe } from './pipes/replace-underscore/replace-underscore.pipe';
-import { PatientRoutinesTableComponent } from './components/patient-routines-table/patient-routines-table.component';
-import { RoutineProductsWithReactionComponent } from './components/routine-products-with-reaction/routine-products-with-reaction.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.component';
+import { RoutineProductsCardComponent } from './components/routine-products-card/routine-products-card.component';
+import { PatientRoutinesAccordionComponent } from './components/patient-routines-accordion/patient-routines-accordion.component';
+import { ReactionDialogComponent } from './components/reaction-dialog/reaction-dialog.component';
 
 @NgModule({
   declarations: [
     ReplaceUnderscorePipe,
-    PatientRoutinesTableComponent,
-    RoutineProductsWithReactionComponent,
-    ReplaceUnderscorePipe,
+    PatientRoutinesAccordionComponent,
     ProductsComponent,
     ProductCardComponent,
     LogoutDialogComponent,
+    RoutineProductsCardComponent,
+    ReactionDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -34,10 +35,11 @@ import { LogoutDialogComponent } from './components/logout-dialog/logout-dialog.
     MaterialModule,
   ],
   exports: [
-    PatientRoutinesTableComponent,
+    PatientRoutinesAccordionComponent,
     ReplaceUnderscorePipe,
     ProductsComponent,
     LogoutDialogComponent,
+    RoutineProductsCardComponent,
   ],
 })
 export class SharedModule {}

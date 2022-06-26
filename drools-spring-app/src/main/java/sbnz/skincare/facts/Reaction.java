@@ -1,9 +1,13 @@
 package sbnz.skincare.facts;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.kie.api.definition.type.Position;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "reaction")
 public class Reaction implements Serializable {
 
     /**
@@ -11,11 +15,26 @@ public class Reaction implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @Position(0)
+    @Column(name = "reaction", nullable = false)
     private String reaction;
 
     @Position(1)
+    @Column(name = "symptom", nullable = false)
     private String symptom;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Reaction() {
         super();
@@ -54,13 +73,9 @@ public class Reaction implements Serializable {
 
         Reaction reaction1 = (Reaction) o;
 
-        if (symptom != null ? !symptom.equals(reaction1.symptom) : reaction1.symptom != null) {
+        if (!Objects.equals(symptom, reaction1.symptom)) {
             return false;
         }
-        if (reaction != null ? !reaction.equals(reaction1.reaction) : reaction1.reaction != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(reaction, reaction1.reaction);
     }
 }

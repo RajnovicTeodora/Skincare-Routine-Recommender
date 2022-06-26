@@ -18,10 +18,12 @@ VALUES ('lazar', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra',
 
 -- Sus users
 INSERT INTO system_user (username, password, name, surname, email, role_id)
-VALUES ('userSus1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sussy', 'Baka1', 'Sus1@example.com',
+VALUES ('userSus1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sussy', 'Baka1',
+        'Sus1@example.com',
         3);
 INSERT INTO system_user (username, password, name, surname, email, role_id)
-VALUES ('userSus2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sussy', 'Baka2', 'Sus2@example.com',
+VALUES ('userSus2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sussy', 'Baka2',
+        'Sus2@example.com',
         3);
 
 INSERT INTO patient (id, birthday, gender)
@@ -283,6 +285,8 @@ INSERT INTO routine (start_date, patient_id)
 VALUES ('2021-10-11', 1);
 INSERT INTO routine_product (routine_id, product_id)
 VALUES (2, 3);
+INSERT INTO routine_product (routine_id, product_id)
+VALUES (2, 4);
 
 -- Sus user routines
 INSERT INTO routine (start_date, patient_id)
@@ -331,3 +335,37 @@ VALUES ('Bad reaction', 1, 4);
 
 INSERT INTO product_reaction (reaction, patient_id, product_id)
 VALUES ('Bad reaction', 4, 4);
+
+-- Reaction
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Bad reaction', 'Allergy');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Bad reaction', 'Condition worsening');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Allergy', 'Anaphylaxis');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Allergy', 'Rash');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Condition worsening', 'Breakouts');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Anaphylaxis', 'Swelling');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Anaphylaxis', 'Difficulty breathing');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Rash', 'Severe itching');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Severe itching', 'Itching');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Rash', 'Red patches');
+
+INSERT INTO reaction (reaction, symptom)
+VALUES ('Red patches', 'Redness');

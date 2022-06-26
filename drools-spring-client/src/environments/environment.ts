@@ -13,6 +13,8 @@ export const environment = {
   registerDermatologistUrl: 'dermatologists/register',
   getRoutinePerscriptionUrl: 'routine/getRoutineRecommendation',
   getRoutinesWithReactionUrl: 'routine/getPatientRoutinesWithReaction',
+  hasReactionUrl: 'reaction/hasReaction',
+  checkProductReactionUrl: 'reaction/checkProductReaction',
   getProductsUrl: 'products/getAll',
   addProductUrl: 'products/addProduct',
   getIngredientsUrl: 'ingredients/getAll',

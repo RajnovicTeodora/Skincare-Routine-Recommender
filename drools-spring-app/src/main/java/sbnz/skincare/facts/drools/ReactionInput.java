@@ -27,7 +27,7 @@ public class ReactionInput implements Serializable {
 
 	public ReactionInput(NewProductReactionDTO dto) {
 		super();
-		this.reaction = dto.getReaction();
+		this.reaction = null;
 		this.symptom = dto.getSymptom();
 	}
 

@@ -1,0 +1,32 @@
+<div [formGroup]="symptomForm" class="dialog-content">
+  <p>Enter the symptom that you are concerned with</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Symptom</mat-label>
+    <input
+      class="input"
+      matInput
+      formControlName="symptom"
+      type="text"
+      required
+    />
+  </mat-form-field>
+</div>
+<div class="dialog-buttons">
+  <button
+    mat-stroked-button
+    (click)="onCloseClick()"
+    color="accent"
+    type="submit"
+  >
+    Close
+  </button>
+  <button
+    mat-stroked-button
+    (click)="onOkClick()"
+    color="accent"
+    type="submit"
+    [disabled]="symptomForm.invalid"
+  >
+    Ok
+  </button>
+</div>

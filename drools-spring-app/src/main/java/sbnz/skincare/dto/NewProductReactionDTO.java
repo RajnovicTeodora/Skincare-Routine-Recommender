@@ -4,9 +4,7 @@ public class NewProductReactionDTO {
 
     private long productId;
 
-    // TODO user
-
-    private String reaction;
+    private String username;
 
     private String symptom;
 
@@ -14,10 +12,9 @@ public class NewProductReactionDTO {
         super();
     }
 
-    public NewProductReactionDTO(long productId, String reaction, String symptom) {
-        super();
+    public NewProductReactionDTO(long productId, String username, String symptom) {
         this.productId = productId;
-        this.reaction = reaction;
+        this.username = username;
         this.symptom = symptom;
     }
 
@@ -29,12 +26,12 @@ public class NewProductReactionDTO {
         this.productId = productId;
     }
 
-    public String getReaction() {
-        return reaction;
+    public String getUsername() {
+        return username;
     }
 
-    public void setReaction(String reaction) {
-        this.reaction = reaction;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSymptom() {

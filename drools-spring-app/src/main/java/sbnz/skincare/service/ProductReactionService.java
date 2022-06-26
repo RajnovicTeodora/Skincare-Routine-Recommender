@@ -2,40 +2,57 @@ package sbnz.skincare.service;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sbnz.skincare.dto.NewProductReactionDTO;
+import sbnz.skincare.facts.Patient;
+import sbnz.skincare.facts.Product;
 import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.facts.Reaction;
 import sbnz.skincare.facts.drools.ReactionInput;
 import sbnz.skincare.repository.ProductReactionRepository;
+import sbnz.skincare.repository.ReactionRepository;
 
 import java.util.List;
 
 @Service
 public class ProductReactionService {
 
-    private static Logger log = LoggerFactory.getLogger(ProductReactionService.class);
-
     private final KieContainer kieContainer;
 
     private final ProductReactionRepository productReactionRepository;
 
+    private final ReactionRepository reactionRepository; // Todo service ?
+
+    private final PatientService patientService;
+
+    private final ProductService productService;
+
     @Autowired
-    public ProductReactionService(KieContainer kieContainer,
-                                  ProductReactionRepository productReactionRepository) {
+    public ProductReactionService(KieContainer kieContainer, ProductReactionRepository productReactionRepository,
+                                  ReactionRepository reactionRepository, PatientService patientService,
+                                  ProductService productService) {
         this.kieContainer = kieContainer;
         this.productReactionRepository = productReactionRepository;
+        this.reactionRepository = reactionRepository;
+        this.patientService = patientService;
+        this.productService = productService;
     }
 
-    public void checkProductReaction(NewProductReactionDTO dto) {
+    public ProductReaction checkProductReaction(NewProductReactionDTO dto) {
 
-        KieSession kSession = kieContainer.newKieSession();
+        Patient patient = this.patientService.findByUsername(dto.getUsername());
+        Product product = this.productService.findById(dto.getProductId());
 
-        Reaction r1 = new Reaction("Bad reaction", "Alergy");
+        KieSession kSession = kieContainer.newKieSession("reaction_rules");
+
+        for (Reaction reaction : this.reactionRepository.findAll()) {
+            kSession.insert(reaction);
+        }
+
+        /*
+        Reaction r1 = new Reaction("Bad reaction", "Allergy");
         Reaction r2 = new Reaction("Bad reaction", "No progress");
         Reaction r3 = new Reaction("Alergy", "Anaphylaxis");
         Reaction r4 = new Reaction("Alergy", "Rash");
@@ -45,13 +62,14 @@ public class ProductReactionService {
         Reaction r8 = new Reaction("Anaphylaxis", "Swelling");
         Reaction r9 = new Reaction("Rash", "Severe itching");
         Reaction r10 = new Reaction("Rash", "Red patches");
-
-        ReactionInput advice = new ReactionInput(dto);
+        */
+        ReactionInput advice = new ReactionInput("Bad reaction", dto.getSymptom());
         ProductReaction reaction = new ProductReaction(null, null, null);
 
         kSession.insert(reaction);
         kSession.insert(advice);
-        kSession.insert(r1);
+
+        /*kSession.insert(r1);
         kSession.insert(r2);
         kSession.insert(r3);
         kSession.insert(r4);
@@ -60,11 +78,22 @@ public class ProductReactionService {
         kSession.insert(r7);
         kSession.insert(r8);
         kSession.insert(r9);
-        kSession.insert(r10);
+        kSession.insert(r10);*/
         kSession.fireAllRules();
         kSession.dispose();
+
+        if(reaction.getReaction() == null)
+            return null;
+
+        reaction.setProduct(product);
+        reaction.setPatient(patient);
+
+        patient.getProductReactions().add(reaction);
+        patientService.save(patient);
+
         System.out.println(reaction.getReaction());
 
+        return productReactionRepository.save(reaction);
     }
 
     public ProductReaction findByProductAndPatient(Long id, String username) {

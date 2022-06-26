@@ -3,6 +3,7 @@ package sbnz.skincare.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sbnz.skincare.dto.NewProductDTO;
+import sbnz.skincare.exception.NotFoundException;
 import sbnz.skincare.exception.ProductExistsException;
 import sbnz.skincare.facts.Ingredient;
 import sbnz.skincare.facts.Product;
@@ -45,5 +46,11 @@ public class ProductService {
 
         Product product = new Product(dto, ingredients);
         return productRepository.save(new Product(dto, ingredients));
+    }
+
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Product with id %d not found", id)));
     }
 }
