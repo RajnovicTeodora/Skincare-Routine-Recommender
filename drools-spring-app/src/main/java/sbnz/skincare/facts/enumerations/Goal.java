@@ -1,0 +1,16 @@
+package sbnz.skincare.facts.enumerations;
+
+public enum Goal {
+
+    REDUCE_REDNESS,
+    REDUCE_ACNE,
+    REDUCE_ACNE_SCARING,
+    REDUCE_OILINESS,
+    REDUCE_WRINKLES,
+    REDUCE_SUN_DAMAGE,
+    IMPROVE_PIGMENTATION,
+    HYDRATE_SKIN,
+    REDUCE_BREAKOUTS,
+    IMPROVE_SKIN_ELASTICITY
+
+}

@@ -1,0 +1,47 @@
+<div class="product-card">
+  <mat-card *ngIf="this.product">
+    <mat-card-header class="card-header">
+      <mat-card-title class="title">
+        {{ this.product.name }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <img mat-card-md-image [src]="bypassUrlSecurity(product.image)" alt="" />
+      <div>
+        <p>
+          Type:
+          {{ this.product.productType | titlecase | replaceUnderscore }}
+        </p>
+        <p>
+          Manufacturer:
+          {{ this.product.manufacturer }}
+        </p>
+
+        <p>
+          Price:
+          {{ this.product.price }}
+        </p>
+      </div>
+
+      <mat-divider></mat-divider>
+      <mat-card-subtitle style="padding-top: 20px; margin-bottom: 5px">
+        Ingredients</mat-card-subtitle
+      >
+      <mat-list class="custom-scroll-bar">
+        <mat-list-item *ngFor="let ingredient of this.product.ingredients">
+          {{ ingredient }}
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions color="accent" style="padding: 0">
+      <button
+        *ngIf="this.role == 'PATIENT' && (hasReaction | async)"
+        mat-stroked-button
+        (click)="addReaction()"
+        color="accent"
+      >
+        Add reaction
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

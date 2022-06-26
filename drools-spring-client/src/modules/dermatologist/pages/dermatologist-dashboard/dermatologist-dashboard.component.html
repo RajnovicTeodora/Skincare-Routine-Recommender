@@ -1,0 +1,78 @@
+<mat-toolbar class="mat-elevation-z8" *ngIf="user != null">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  <span class="span"
+    ><img
+      class="logo-icon"
+      src="assets/images/logo.png"
+      alt="logo"
+      (click)="this.router.navigate([''])"
+    />
+    Sakura Skin Care</span
+  >
+  <div
+    fxShow="true"
+    fxHide.lt-md="true"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+  ></div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <h4 class="name">{{ this.user.username }}</h4>
+
+    <button
+      mat-button
+      class="menu-button"
+      (click)="onPasswordChangeButtonClicked()"
+    >
+      <mat-icon>settings</mat-icon>
+      <span>Change password</span>
+    </button>
+
+    <button
+      mat-button
+      class="menu-button"
+      (click)="onLogoutButtonClicked()"
+      id="logout-button"
+    >
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <mat-action-list>
+      <mat-list-item (click)="this.activeView = '3'"> Patients </mat-list-item>
+      <mat-list-item (click)="this.activeView = '1'"> Products </mat-list-item>
+    </mat-action-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <app-patient-table
+        class="patients"
+        *ngIf="this.activeView === '3'"
+        (onPatientRoutinesClicked)="onPatientRoutinesClicked($event)"
+      ></app-patient-table>
+      <app-patient-routines
+        class="routines"
+        *ngIf="this.activeView === '2'"
+        [username]="this.showRoutinesUsername"
+      ></app-patient-routines>
+      <app-products class="products" *ngIf="this.activeView === '1'">
+      </app-products>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<app-logout-dialog
+  *ngIf="this.showModalLogout"
+  (onLogoutClose)="onLogoutCloseClicked()"
+></app-logout-dialog>

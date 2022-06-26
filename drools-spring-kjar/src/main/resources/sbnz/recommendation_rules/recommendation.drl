@@ -1,17 +1,20 @@
 package recommendation_rules;
 
-import sbnz.skincare.facts.Goal;
-import sbnz.skincare.facts.Product;
-import sbnz.skincare.facts.SkinTypeCharacteristics;
 import sbnz.skincare.facts.Ingredient;
+import sbnz.skincare.facts.Product;
+import sbnz.skincare.facts.ProductReaction;
+import sbnz.skincare.facts.Routine;
+import sbnz.skincare.facts.SkinTypeCharacteristics;
 import sbnz.skincare.facts.drools.IngredientScoring;
 import sbnz.skincare.facts.drools.ProductScoring;
 import sbnz.skincare.facts.drools.RecommendationInput;
-import sbnz.skincare.facts.enumerations.SkinCharacteristic;
-import sbnz.skincare.facts.enumerations.AgeGroup;
-import sbnz.skincare.facts.enumerations.ProductType;
-import sbnz.skincare.facts.enumerations.SkinType;
 import sbnz.skincare.facts.enumerations.AcneType;
+import sbnz.skincare.facts.enumerations.AgeGroup;
+import sbnz.skincare.facts.enumerations.Goal;
+import sbnz.skincare.facts.enumerations.ProductType;
+import sbnz.skincare.facts.enumerations.SkinCharacteristic;
+import sbnz.skincare.facts.enumerations.SkinType;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -31,9 +34,10 @@ end
 declare Exfoliator
 end
 
+// ========= Rules to determine age group =========
 rule "Age Group - CHILD"
-	
-	salience 200
+
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() <= 14 ) 
 	then
@@ -43,7 +47,7 @@ end
 
 rule "Age Group - YOUTH"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() > 14 && Period.between(birthday, LocalDate.now()).getYears() <= 25 ) 
 	then
@@ -53,7 +57,7 @@ end
 
 rule "Age Group - ADULT"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() > 25 && Period.between(birthday, LocalDate.now()).getYears() <= 64 ) 
 	then
@@ -63,14 +67,16 @@ end
 
 rule "Age Group - SENIOR"
 
-	salience 200
+	salience 400
 	when 
 		$r: RecommendationInput(birthday != null, Period.between(birthday, LocalDate.now()).getYears() > 64 ) 
 	then
 		System.out.println("Age group - SENIOR");
 		modify($r) { setAgeGroup(AgeGroup.SENIOR) }
 end
+// ==================
 
+// ========= Rules to determine the skin type of patient =========
 rule "Skin Types" 
 	
 	salience ((100*$value) / $characteristics.size())
@@ -86,27 +92,29 @@ rule "Skin Types"
     	System.out.println("Number of skin type charactereistics: " + $value + "/" + $characteristics.size());
     	modify($r) { setDiagnosedSkinType($type) }
 end
+// ==================
 
+// ========= Rules for ingredient scoring based on it's benefiting factors =========
 rule "Ingredients Scoring"
 
-	salience 2
+	salience 3
 	when
-		$i: Ingredient($ingredientName: name, $benefitingAge: benefitingAge, $benefitingAcne: benefitingAcne, $benefitingSkintype: benefitingSkintype, $benefitingGoals: benefitingGoals)
+		$i: Ingredient($ingredientName: name, $benefitingAge: benefitingAge,$benefitingSkinType: benefitingSkinType, $benefitingGoals: benefitingGoals)
 		$r: RecommendationInput(diagnosedSkinType != null, $skinType: diagnosedSkinType, $ageGroup: ageGroup, $acneType: acneType, $wantedGoals: wantedGoals)
 		Number ($ageScore: intValue) from accumulate(
 			AgeGroup($age:this, this == $ageGroup) from $benefitingAge,
 			count(1)
 		)
 		Number ($acneScore: intValue) from accumulate(
-			AcneType($acne:this, this == $acneType) from $benefitingAcne,
+			AcneType($acne:this, this == $acneType) from $i.benefitingAcne, // TODO check 
 			count(1)
 		)
 		Number ($skinTypeScore: intValue) from accumulate(
-			SkinType($s:this, this == $skinType) from $benefitingSkintype,
+			SkinType($s:this, this == $skinType) from $benefitingSkinType,
 			count(1)
 		)
 		Number ($goalScore: intValue) from accumulate(
-        	$g: Goal( name memberOf $wantedGoals ) from $benefitingGoals,
+        	Goal($g:this, this memberOf $wantedGoals) from $benefitingGoals,
         	count($g)
         )
 	then 
@@ -114,27 +122,51 @@ rule "Ingredients Scoring"
 		System.out.println("Ingredient: " + $ingredientName);
       	System.out.println("Score: " + score);
 	  	insert( new IngredientScoring($ingredientName, score)); 
-	end 
-	
-rule "Remove products with alergen"
+end 
+// ==================
 
-	salience 1
+// ========= Rules to remove products containing allergens =========
+rule "Remove products with allergen"
+	
+	salience 2
 	when 
 		$p: Product($productName: name, $manufacturer: manufacturer, $ingredients: ingredients)
-		$r: RecommendationInput($alergies: alergies)
+		$r: RecommendationInput($allergies: allergies)
 
-        exists( Ingredient(name memberOf $alergies) from $ingredients )         	
+        exists( Ingredient(name memberOf $allergies) from $ingredients )         	
         
 	then 
 		System.out.println("Remove product containing alergen: " + $productName);
 		delete($p)
 end
+// ==================
 
+// ========= Rules to remove products with bad reaction =========
+rule "Remove products with reaction"
+	
+	salience 1
+	when 
+		$p: Product($productName: name)
+		$r: RecommendationInput($productReactions: productReactions)
+		$productReactionIds: List() from accumulate (
+	        ProductReaction($product: product) from $productReactions,
+	        collectList($product.getId())
+	    )
+        exists( Product(id memberOf $productReactionIds) from $p )         	
+        
+	then 
+		System.out.println("Remove product containing reaction: " + $productName);
+		delete($p)
+end
+// ==================
+
+// ========= Rules for product scoring =========
 rule "Product Scoring"
+
 	salience 0
 	no-loop
 	when
-		$p: Product($productName: name, $ingredients: ingredients, $productType: productType)
+		$p: Product($productId: id, $ingredients: ingredients, $productType: productType)
 		$r: RecommendationInput($manufacturer: manufacturer)
 		$ingredientNames: List() from accumulate (
 	        Ingredient($name: name) from $ingredients,
@@ -151,87 +183,109 @@ rule "Product Scoring"
 		)
 	then
 	    double score = $ingredientS + $manufacturerScore;
-		System.out.println("Product " + $productName + " Score: " + score);
-		insert (new ProductScoring($productName, score, $productType));
+		System.out.println("Product " + $productId + " Score: " + score);
+		insert (new ProductScoring($productId, score, $productType));
 end 
+// ==================
 
+// ========= Rules for perscribing product based on tpe =========
 rule "Select best CLEANSER"
+
 	salience (-100/$score)
 	no-loop 
 	when
+		$routine: Routine($products: products)
 		$scoredProducts: ProductScoring(
 	    	productType == ProductType.CLEANSER,
 	        $score: score,
-	        $name: name
+	        $productId: productId
 	    );
-        not Serum();
+	    $selectedCleanser: Product(id == $productId);
+        not Cleanser();
+        
 	then
-		System.out.println("CLEANSER " + $name + " " + $score);
+		System.out.println("CLEANSER " + $productId + " " + $score);
     	insert( new Cleanser() );
-    
+    	modify($routine) { addProduct($selectedCleanser) }
     
 end
 
 rule "Select best EXFOLIATOR"
+
 	salience (-100/$score)
 	no-loop 
 	when
+		$routine: Routine($products: products)
 		$scoredProducts: ProductScoring(
 	    	productType == ProductType.EXFOLIATOR,
 	        $score: score,
-	        $name: name
+	          $productId: productId
 	    );
+	    $selectedExfoliator: Product(id == $productId);
         not Exfoliator();
 	then
-		System.out.println("EXFOLIATOR " + $name + " " + $score);
+		System.out.println("EXFOLIATOR " + $productId + " " + $score);
     	insert( new Exfoliator() );
-    
+        modify($routine) { addProduct($selectedExfoliator) }
 end
 
 rule "Select best SERUM"
+
 	salience (-100/$score)
 	no-loop 
 	when
+	    $routine: Routine($products: products)
 		$scoredProducts: ProductScoring(
 	    	productType == ProductType.SERUM,
 	        $score: score,
-	        $name: name
+	        $productId: productId
 	    );
+	    $selectedSerum: Product(id == $productId);
         not Serum();
 	then
-		System.out.println("SERUM " + $name + " " + $score);
+		System.out.println("SERUM " + $productId + " " + $score);
     	insert( new Serum() );
+    	modify($routine) { addProduct($selectedSerum) }
 end
 
 
 rule "Select best SUN_SCREEN"
+
 	salience (-100/$score)
 	no-loop 
 	when
+	    $routine: Routine($products: products)
 		$scoredProducts: ProductScoring(
 	    	productType == ProductType.SUN_SCREEN,
 	        $score: score,
-	        $name: name
+	        $productId: productId
 	    );
+	    $selectedSunScreen: Product(id == $productId);
         not SunScreen();
 	then
-		System.out.println("SUN_SCREEN " + $name + " " + $score);
+		System.out.println("SUN_SCREEN " + $productId + " " + $score);
     	insert( new SunScreen() );
+    	modify($routine) { addProduct($selectedSunScreen) }
 end
 
 
 rule "Select best MOISTURIZER"
+
 	salience (-100/$score)
 	no-loop 
 	when
+	    $routine: Routine($products: products)
 		$scoredProducts: ProductScoring(
 	    	productType == ProductType.MOISTURIZER,
 	        $score: score,
-	        $name: name
+	        $productId: productId
 	    );
-        not Moisturizer();
+	    $selectedMoisturizer: Product(id == $productId);
+    	not Moisturizer();
 	then
-		System.out.println("MOISTURIZER " + $name + " " + $score);
+		System.out.println("MOISTURIZER " + $productId + " " + $score);
     	insert( new Moisturizer() );
-    
+    	modify($routine) { addProduct($selectedMoisturizer) }
 end
+
+// ==================

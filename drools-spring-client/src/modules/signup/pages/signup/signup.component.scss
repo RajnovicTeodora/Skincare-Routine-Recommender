@@ -1,0 +1,55 @@
+.jw-modal-background {
+  /* modal background fixed across whole screen */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  /* semi-transparent black  */
+  background-color: #424242;
+  opacity: 0.9;
+
+  /* z-index must be below .jw-modal and above everything else  */
+  z-index: 100;
+}
+
+.input {
+  width: 60%;
+  font-size: medium;
+}
+
+.title {
+  text-align: center;
+  display: block;
+  padding-bottom: 2%;
+}
+
+.container {
+  width: 60%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+  position: fixed;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 800;
+}
+
+.registration-card {
+  //width: 80%;
+  text-align: center;
+  padding-bottom: 5%;
+  padding-top: 2%;
+}
+
+.card-buttons {
+  display: flex;
+  width: 83%;
+  justify-content: flex-end;
+}

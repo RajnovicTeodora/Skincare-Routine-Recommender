@@ -4,29 +4,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import sbnz.skincare.dto.NewProductReactionDTO;
+import sbnz.skincare.dto.ProductReactionDTO;
+import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.service.ProductReactionService;
 
 @RestController
-@RequestMapping(value = "/product/reaction", produces = MediaType.APPLICATION_JSON_VALUE)
+@Transactional
+@RequestMapping(value = "/reaction", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductReactionController {
 
-	private ProductReactionService productReactionService;
+    private final ProductReactionService productReactionService;
 
-	@Autowired
-	public ProductReactionController(ProductReactionService productReactionService) {
-		this.productReactionService = productReactionService;
-	}
+    @Autowired
+    public ProductReactionController(ProductReactionService productReactionService) {
+        this.productReactionService = productReactionService;
+    }
 
-	@PostMapping("/checkProductReaction")
-	public ResponseEntity<?> checkProductReaction(
-			@RequestBody NewProductReactionDTO newProductReactionDTO) {
-		this.productReactionService.checkProductReaction(newProductReactionDTO);
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
+    @PostMapping("/checkProductReaction")
+    public ResponseEntity<ProductReactionDTO> checkProductReaction(
+            @RequestBody NewProductReactionDTO newProductReactionDTO) {
+        ProductReaction reaction = this.productReactionService.checkProductReaction(newProductReactionDTO);
+        if (reaction == null)
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(new ProductReactionDTO(reaction), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/hasReaction/{username}/{product}",
+            method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Boolean> hasReaction(
+            @PathVariable(value = "username") String username, @PathVariable(value = "product") Long product) {
+        return new ResponseEntity<>(
+                this.productReactionService.findByProductAndPatient(product, username) != null, HttpStatus.OK);
+    }
 }

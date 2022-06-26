@@ -4,117 +4,147 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import sbnz.skincare.facts.enumerations.AcneType;
-import sbnz.skincare.facts.enumerations.AgeGroup;
-import sbnz.skincare.facts.enumerations.SkinCharacteristic;
-import sbnz.skincare.facts.enumerations.SkinType;
+import sbnz.skincare.dto.RequestRoutineDTO;
+import sbnz.skincare.facts.ProductReaction;
+import sbnz.skincare.facts.enumerations.*;
 
 public class RecommendationInput implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	private LocalDate lastRoutineDate; // TODO
-	private List<SkinCharacteristic> skinCharacteristics;
-	private SkinType diagnosedSkinType;
-	private LocalDate birthday;
-	private AgeGroup ageGroup;
-	private List<String> wantedGoals;
-	private AcneType acneType;
-	private List<String> alergies;
-	private String manufacturer;
+    // Entered patient's skin characteristics
+    private List<SkinCharacteristic> skinCharacteristics;
 
-	public RecommendationInput() {
-		super();
-	}
+    // Diagnosed skin typed based on skin characteristics
+    private SkinType diagnosedSkinType;
 
-	public RecommendationInput(LocalDate lastRoutineDate, List<SkinCharacteristic> skinCharacteristics,
-			SkinType diagnosedSkinType, LocalDate birthday, AgeGroup ageGroup, List<String> wantedGoals,
-			AcneType acneType, List<String> alergies, String manufacturer) {
-		super();
-		this.lastRoutineDate = lastRoutineDate;
-		this.skinCharacteristics = skinCharacteristics;
-		this.diagnosedSkinType = diagnosedSkinType;
-		this.birthday = birthday;
-		this.ageGroup = ageGroup;
-		this.wantedGoals = wantedGoals;
-		this.acneType = acneType;
-		this.alergies = alergies;
-		this.manufacturer = manufacturer;
-	}
+    // Patient's birthday
+    private LocalDate birthday;
 
-	public LocalDate getLastRoutineDate() {
-		return lastRoutineDate;
-	}
+    // Patient's age group based on date of birth
+    private AgeGroup ageGroup;
 
-	public void setLastRoutineDate(LocalDate lastRoutineDate) {
-		this.lastRoutineDate = lastRoutineDate;
-	}
+    // Patient's goals to achieve
+    private List<Goal> wantedGoals;
 
-	public List<SkinCharacteristic> getSkinCharacteristics() {
-		return skinCharacteristics;
-	}
+    // Type of acne
+    private AcneType acneType;
 
-	public void setSkinCharacteristics(List<SkinCharacteristic> skinCharacteristics) {
-		this.skinCharacteristics = skinCharacteristics;
-	}
+    // List of allergies
+    private List<String> allergies;
 
-	public SkinType getDiagnosedSkinType() {
-		return diagnosedSkinType;
-	}
+    // Previously used product manufacturer
+    private String manufacturer;
 
-	public void setDiagnosedSkinType(SkinType diagnosedSkinType) {
-		this.diagnosedSkinType = diagnosedSkinType;
-	}
+    // Patient reactions to products
+    private List<ProductReaction> productReactions;
 
-	public LocalDate getBirthday() {
-		return birthday;
-	}
+    public RecommendationInput() {
+        super();
+    }
 
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
+    public RecommendationInput(List<SkinCharacteristic> skinCharacteristics, SkinType diagnosedSkinType,
+                               LocalDate birthday, AgeGroup ageGroup, List<Goal> wantedGoals,
+                               AcneType acneType, List<String> allergies, String manufacturer,
+                               List<ProductReaction> productReactions) {
+        super();
+        this.skinCharacteristics = skinCharacteristics;
+        this.diagnosedSkinType = diagnosedSkinType;
+        this.birthday = birthday;
+        this.ageGroup = ageGroup;
+        this.wantedGoals = wantedGoals;
+        this.acneType = acneType;
+        this.allergies = allergies;
+        this.manufacturer = manufacturer;
+        this.productReactions = productReactions;
+    }
 
-	public AgeGroup getAgeGroup() {
-		return ageGroup;
-	}
+    public RecommendationInput(RequestRoutineDTO requestRoutineDTO, LocalDate birthday,
+                               List<ProductReaction> productReactions) {
+        super();
+        this.skinCharacteristics = requestRoutineDTO.getSkinCharacteristics();
+        this.diagnosedSkinType = null;
+        this.birthday = birthday;
+        this.ageGroup = null;
+        this.wantedGoals = requestRoutineDTO.getWantedGoals();
+        this.acneType = requestRoutineDTO.getAcneType();
+        this.allergies = requestRoutineDTO.getAllergies();
+        this.manufacturer = requestRoutineDTO.getManufacturer();
+        this.productReactions = productReactions;
+    }
 
-	public void setAgeGroup(AgeGroup ageGroup) {
-		this.ageGroup = ageGroup;
-	}
+    public List<SkinCharacteristic> getSkinCharacteristics() {
+        return skinCharacteristics;
+    }
 
-	public List<String> getWantedGoals() {
-		return wantedGoals;
-	}
+    public void setSkinCharacteristics(List<SkinCharacteristic> skinCharacteristics) {
+        this.skinCharacteristics = skinCharacteristics;
+    }
 
-	public void setWantedGoals(List<String> wantedGoals) {
-		this.wantedGoals = wantedGoals;
-	}
+    public SkinType getDiagnosedSkinType() {
+        return diagnosedSkinType;
+    }
 
-	public AcneType getAcneType() {
-		return acneType;
-	}
+    public void setDiagnosedSkinType(SkinType diagnosedSkinType) {
+        this.diagnosedSkinType = diagnosedSkinType;
+    }
 
-	public void setAcneType(AcneType acneType) {
-		this.acneType = acneType;
-	}
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 
-	public List<String> getAlergies() {
-		return alergies;
-	}
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
-	public void setAlergies(List<String> alergies) {
-		this.alergies = alergies;
-	}
+    public AgeGroup getAgeGroup() {
+        return ageGroup;
+    }
 
-	public String getManufacturer() {
-		return manufacturer;
-	}
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
+    }
 
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
-	}
+    public List<Goal> getWantedGoals() {
+        return wantedGoals;
+    }
 
+    public void setWantedGoals(List<Goal> wantedGoals) {
+        this.wantedGoals = wantedGoals;
+    }
+
+    public AcneType getAcneType() {
+        return acneType;
+    }
+
+    public void setAcneType(AcneType acneType) {
+        this.acneType = acneType;
+    }
+
+    public List<String> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(List<String> allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public List<ProductReaction> getProductReactions() {
+        return productReactions;
+    }
+
+    public void setProductReactions(List<ProductReaction> productReactions) {
+        this.productReactions = productReactions;
+    }
 }

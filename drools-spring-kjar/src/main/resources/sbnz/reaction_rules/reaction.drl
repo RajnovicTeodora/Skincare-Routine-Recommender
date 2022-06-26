@@ -1,75 +1,22 @@
 package reaction_rules;
 
+import sbnz.skincare.facts.Reaction;
 import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.facts.drools.ReactionInput;
 
-global ReactionInput reactionInput;
-
-query hasRedness()
-    eval(reactionInput.getSkinRedness())
+query isContainedIn( String x, String y )
+  Reaction( x, y; )
+  or
+  ( Reaction( z, y; ) and isContainedIn( x, z; ) )
 end
 
-query hasItching()
-    eval(reactionInput.getItching())
-end
-
-query hasRedPatches()
-    eval(reactionInput.getRedPatches())
-end
-
-query hasSwelling()
-    eval(reactionInput.getSwelling())
-end
-
-query hasLowBloodPressure()
-    eval(reactionInput.getLowBloodPressure())
-end
-
-query hasHighHeartRate()
-    eval(reactionInput.getHeartRate() > 100)
-end
-
-query hasBreakouts()
-	eval(reactionInput.getBreakouts())
-end
-
-query usedProductsRegularly()
-    eval(reactionInput.getMonthsOfProductUse() >=2)
-end
-
-query hasRash()
-	hasRedness() and hasItching() and hasRedPatches()
-end
-
-query hasAnaphylaxis()
-	hasSwelling() and hasLowBloodPressure() and hasHighHeartRate()
-end
-
-query hasAlergicReaction()
-	hasRash() and hasAnaphylaxis()
-end
-
-query conditionWorsening()
-	hasBreakouts() and usedProductsRegularly()
-end
-
-rule "Alergic reaction"
+rule "Has reaction"
     when
         $pr: ProductReaction(reaction == null)
-        hasAlergicReaction()
+        $ri: ReactionInput($reaction: reaction, $symptom: symptom)
+        isContainedIn($reaction, $symptom;)
     then
-        System.out.println(drools.getRule().getName());
-        modify($pr) {
-            setReaction(drools.getRule().getName())
-        }
-end
-
-rule "Ineffective treatment"
-    when
-        $pr: ProductReaction(reaction == null)
-        conditionWorsening()
-    then
-        System.out.println(drools.getRule().getName());
+        System.out.println($symptom + " IS ELEMENT OF " + $reaction); 
         modify($pr) {
             setReaction(drools.getRule().getName())
         }

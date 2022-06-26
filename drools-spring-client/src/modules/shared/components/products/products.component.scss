@@ -1,0 +1,22 @@
+.card-deck {
+  display: inline-flex;
+}
+
+.example-form {
+  width: 100%;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.example-container {
+  width: 75%;
+  margin-left: 10px;
+  font-size: large;
+}
+
+.add-product {
+  margin-bottom: 10px;
+  float: right;
+  margin-top: 10px;
+}

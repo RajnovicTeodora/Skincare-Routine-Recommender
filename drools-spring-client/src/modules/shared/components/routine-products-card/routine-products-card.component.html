@@ -1,0 +1,24 @@
+<mat-grid-list cols="4" rowHeight="100px" *ngFor="let product of this.products">
+  <mat-grid-tile [colspan]="4" [rowspan]="1">
+    {{ product.name }} - {{ product.manufacturer }}
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <img class="product-img" [src]="bypassUrlSecurity(product.image)" alt="" />
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="3" [rowspan]="1">
+    <p>
+      {{ product.productType | titlecase | replaceUnderscore }}
+      <br />
+      Price: {{ product.price }}
+      <br />
+      {{ product.usageInstructions }}
+    </p>
+    <p>
+      {{
+        product.reaction == null
+          ? "No reaction to product"
+          : product.reaction + " - Halt product usage"
+      }}
+    </p>
+  </mat-grid-tile>
+</mat-grid-list>

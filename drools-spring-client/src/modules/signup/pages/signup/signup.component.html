@@ -1,0 +1,115 @@
+<div class="container">
+  <mat-card class="registration-card">
+    <mat-card-header mat-card-title class="title">
+      Registration
+    </mat-card-header>
+    <mat-card-content [formGroup]="signupForm" style="white-space: pre-line">
+      <!-- username -->
+      <mat-form-field class="input" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="username"
+          required
+          placeholder="Username"
+        />
+      </mat-form-field>
+
+      <!-- password -->
+      <mat-form-field class="input" color="accent">
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          required
+          placeholder="Password"
+        />
+      </mat-form-field>
+
+      <!-- name -->
+      <mat-form-field class="input" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          required
+          placeholder="Name"
+        />
+      </mat-form-field>
+
+      <!-- surname -->
+      <mat-form-field class="input" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="surname"
+          required
+          placeholder="Surname"
+        />
+      </mat-form-field>
+
+      <!-- email -->
+      <mat-form-field class="input" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="email"
+          required
+          placeholder="Email"
+        />
+      </mat-form-field>
+
+      <!-- birthday -->
+
+      <mat-form-field color="accent" class="input">
+        <mat-label>Birthday</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="birthday"
+          [max]="this.maxDate"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <!-- gender -->
+      <mat-form-field class="input" color="accent">
+        <mat-label>Gender</mat-label>
+        <mat-select matInput formControlName="gender" required>
+          <mat-option value="MALE">Male</mat-option>
+          <mat-option value="FEMALE">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions class="card-buttons">
+      <button
+        mat-flat-button
+        color="accent"
+        type="submit"
+        class="submit-button"
+        (click)="cancel()"
+        id="cancel-button"
+      >
+        Cancel
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        type="submit"
+        class="submit-button"
+        (click)="savePatient()"
+        [disabled]="signupForm.invalid"
+        id="save-button"
+      >
+        Save
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="jw-modal-background"></div>

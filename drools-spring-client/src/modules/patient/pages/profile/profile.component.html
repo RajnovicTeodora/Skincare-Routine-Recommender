@@ -1,0 +1,92 @@
+<div *ngIf="patient">
+  <header class="card-header">Welcome {{ username }}</header>
+
+  <div class="card-body">
+    <form [formGroup]="editForm" *ngIf="editForm">
+      <mat-form-field class="containerInput" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          required
+          placeholder="Name"
+          [readonly]="!editMode"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="containerInput" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="surname"
+          placeholder="Surname"
+          [readonly]="!editMode"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="containerInput" color="accent">
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          [readonly]="!editMode"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="containerInput" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="birthday"
+          placeholder="Birthday"
+          [readonly]="true"
+          [disabled]="true"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="containerInput" color="accent">
+        <input
+          matInput
+          type="text"
+          formControlName="gender"
+          placeholder="Gender"
+          [readonly]="true"
+          [disabled]="true"
+        />
+      </mat-form-field>
+
+      <div class="edit-button">
+        <button
+          *ngIf="!this.editMode"
+          mat-flat-button
+          color="accent"
+          type="submit"
+          (click)="this.editMode = true"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="submit-button">
+        <button
+          *ngIf="this.editMode"
+          mat-flat-button
+          color="accent"
+          type="submit"
+          (click)="this.editMode = false"
+        >
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <button
+          *ngIf="this.editMode"
+          mat-stroked-button
+          color="accent"
+          type="submit"
+          (click)="editProfile()"
+        >
+          <mat-icon>check</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

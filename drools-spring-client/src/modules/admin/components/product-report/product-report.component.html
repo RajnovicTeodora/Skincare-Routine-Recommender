@@ -1,0 +1,62 @@
+<div class="product-card">
+  <mat-card *ngIf="this.bestProduct">
+    <mat-card-header class="card-header">
+      <mat-card-title class="title">
+        Best product: {{ this.bestProduct.name }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <img
+        mat-card-md-image
+        [src]="bypassUrlSecurity(bestProduct.image)"
+        alt=""
+      />
+      <div>
+        <p>
+          Type:
+          {{ this.bestProduct.productType | titlecase | replaceUnderscore }}
+        </p>
+        <p>
+          Manufacturer:
+          {{ this.bestProduct.manufacturer }}
+        </p>
+
+        <p>
+          Price:
+          {{ this.bestProduct.price }}
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="product-card">
+  <mat-card *ngIf="this.worstProduct">
+    <mat-card-header class="card-header">
+      <mat-card-title class="title">
+        Worst product: {{ this.worstProduct.name }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <img
+        mat-card-md-image
+        [src]="bypassUrlSecurity(worstProduct.image)"
+        alt=""
+      />
+      <div>
+        <p>
+          Type:
+          {{ this.worstProduct.productType | titlecase | replaceUnderscore }}
+        </p>
+        <p>
+          Manufacturer:
+          {{ this.worstProduct.manufacturer }}
+        </p>
+
+        <p>
+          Price:
+          {{ this.worstProduct.price }}
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

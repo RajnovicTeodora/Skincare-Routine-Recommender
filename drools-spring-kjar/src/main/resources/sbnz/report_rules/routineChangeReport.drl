@@ -1,15 +1,19 @@
 package report_rules;
 
+global ArrayList<Patients> susPatients;
+
 import sbnz.skincare.facts.Patient;
 import sbnz.skincare.facts.Product;
 import sbnz.skincare.facts.ProductReaction;
 import sbnz.skincare.facts.Routine;
+
 import java.time.LocalDate
+import java.util.ArrayList;
 import java.util.List;
 
 rule "Routine changed too often without any unwanted product reactions"
 	when
-	    $p : Patient($routines: routines, $productReactions: productReactions)
+	    $p: Patient($username: username, $routines: getRoutines(), $productReactions: productReactions)
 	    $productReactionIds: List() from accumulate (
 	        ProductReaction($id: product.getId()) from $productReactions,
 	        collectList($id)
@@ -28,5 +32,6 @@ rule "Routine changed too often without any unwanted product reactions"
 	    )
 		eval($routineChangesIn1Year >= 3)
 	then
-		System.out.println("Suspicious: " + $p + " routines changed: " + $routineChangesIn1Year);
+		System.out.println("Suspicious: " + $username + " routines changed: " + $routineChangesIn1Year);
+		susPatients.add($p);
 end
