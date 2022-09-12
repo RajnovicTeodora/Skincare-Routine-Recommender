@@ -1,10 +1,11 @@
-<div>
+<div style="display: block; margin: 50px">
   <app-product-report
     *ngIf="this.productReport"
     [bestProduct]="this.productReport.bestProduct"
     [worstProduct]="this.productReport.worstProduct"
   ></app-product-report>
   <app-suspicious-patients-report
+    style="margin: 20%"
     *ngIf="this.susPatients"
     [data]="this.susPatients"
   ></app-suspicious-patients-report>

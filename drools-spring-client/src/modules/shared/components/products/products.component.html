@@ -1,4 +1,4 @@
-<diV>
+<div style="display: inline-grid">
   <div>
     <button
       *ngIf="role == 'DERMATOLOGIST'"
@@ -11,24 +11,31 @@
       Add Product
     </button>
   </div>
-  <div class="content">
-    <div class="card-deck" fxLayout="row wrap" fxLayoutGap="10px grid">
-      <div
-        fxFlex="25%"
-        fxFlex.xs="100%"
-        fxFlex.sm="33%"
-        *ngFor="let product of observable | async"
-      >
-        <app-product-card
-          id="{{ product.id }}"
-          [product]="product"
-          [role]="role"
-          [username]="username"
-          (deleteClicked)="onDeleted($event)"
+  <cdk-virtual-scroll-viewport
+    orientation="horizontal"
+    itemSize="3"
+    class="example-viewport custom-scroll-bar"
+  >
+    <div class="content" style="display: flex">
+      <div class="card-deck" fxLayout="row wrap" fxLayoutGap="10px grid">
+        <div
+          style="width: 20%; min-width: 200px"
+          fxFlex="25%"
+          fxFlex.xs="100%"
+          fxFlex.sm="33%"
+          *ngFor="let product of observable | async"
         >
-        </app-product-card>
+          <app-product-card
+            style="height: -webkit-fill-available !important"
+            id="{{ product.id }}"
+            [product]="product"
+            [role]="role"
+            [username]="username"
+            (deleteClicked)="onDeleted($event)"
+          >
+          </app-product-card>
+        </div>
       </div>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 15, 25]"></mat-paginator>
-  </div>
-</diV>
+  </cdk-virtual-scroll-viewport>
+</div>

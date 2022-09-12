@@ -46,3 +46,14 @@ mat-list {
 .custom-scroll-bar::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.26);
 }
+
+.mat-card-title {
+  text-align: center !important;
+  font-size: 15px;
+  font-weight: 500;
+  min-height: 50px;
+}
+
+.card-header {
+  display: block;
+}

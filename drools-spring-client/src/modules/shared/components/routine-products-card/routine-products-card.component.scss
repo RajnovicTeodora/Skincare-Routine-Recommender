@@ -24,6 +24,15 @@
   text-align: center;
 }
 
+.ttttl {
+  font-size: medium;
+  min-height: 50px !important;
+  max-height: 50px;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 .product-card {
   border-radius: 4px;
   margin-top: 10px;
@@ -62,4 +71,10 @@
 
 p {
   display: block;
+}
+
+.mat-card-title {
+  font-size: 24px;
+  font-weight: 500;
+  min-height: 50px;
 }

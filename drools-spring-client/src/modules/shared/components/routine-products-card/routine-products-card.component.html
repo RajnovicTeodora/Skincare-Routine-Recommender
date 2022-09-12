@@ -6,19 +6,25 @@
     <img class="product-img" [src]="bypassUrlSecurity(product.image)" alt="" />
   </mat-grid-tile>
   <mat-grid-tile [colspan]="3" [rowspan]="1">
-    <p>
-      {{ product.productType | titlecase | replaceUnderscore }}
-      <br />
-      Price: {{ product.price }}
-      <br />
-      {{ product.usageInstructions }}
-    </p>
-    <p>
-      {{
-        product.reaction == null
-          ? "No reaction to product"
-          : product.reaction + " - Halt product usage"
-      }}
-    </p>
+    <div style="display: flex; width: 100%">
+      <div style="width: 70%">
+        <p>
+          {{ product.productType | titlecase | replaceUnderscore }}
+          <br />
+          Price: {{ product.price }}
+          <br />
+          {{ product.usageInstructions }}
+        </p>
+      </div>
+      <div style="width: 30%">
+        <p>
+          {{
+            product.reaction == null
+              ? "No reaction to product"
+              : product.reaction + " - Halt product usage"
+          }}
+        </p>
+      </div>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>

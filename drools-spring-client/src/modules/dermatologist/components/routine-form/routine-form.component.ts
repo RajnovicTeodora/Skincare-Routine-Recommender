@@ -41,6 +41,7 @@ export class RoutineFormComponent implements OnInit {
   ];
 
   acneTypeSelect: Select[] = [
+    { value: undefined, viewValue: '' },
     { value: 'BLACKHEADS', viewValue: 'Blackheads' },
     { value: 'WHITEHEADS', viewValue: 'Whiteheads' },
     { value: 'PAPULES', viewValue: 'Papules' },
@@ -63,7 +64,7 @@ export class RoutineFormComponent implements OnInit {
     this.routineForm = this.fb.group({
       skinCharacteristics: [null, Validators.required],
       wantedGoals: [null, Validators.required],
-      acneType: [null, Validators.required],
+      acneType: [null],
       allergies: [null],
       manufacturer: [
         null,

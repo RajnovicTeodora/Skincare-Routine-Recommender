@@ -1,4 +1,4 @@
 export interface Select {
-  value: string;
+  value: string | undefined;
   viewValue: string;
 }

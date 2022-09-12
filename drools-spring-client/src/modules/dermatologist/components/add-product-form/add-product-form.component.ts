@@ -42,7 +42,7 @@ export class AddProductFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(2),
-          Validators.maxLength(15),
+          Validators.maxLength(25),
           Validators.pattern(this.regex),
         ],
       ],

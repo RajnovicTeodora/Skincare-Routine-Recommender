@@ -19,4 +19,18 @@
   margin-bottom: 10px;
   float: right;
   margin-top: 10px;
+  margin-right: 10px;
+}
+
+.custom-scroll-bar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.26);
+}
+
+.example-viewport {
+  height: 600px;
+  width: calc(100vh + 500px);
 }

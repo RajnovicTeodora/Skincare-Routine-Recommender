@@ -30,7 +30,7 @@ public class SkinTypeCharacteristics implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "skin_type")
     @Enumerated(EnumType.STRING)

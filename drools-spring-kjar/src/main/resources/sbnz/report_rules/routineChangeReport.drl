@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 rule "Routine changed too often without any unwanted product reactions"
+	salience (10*$routineChangesIn1Year)
 	when
 	    $p: Patient($username: username, $routines: getRoutines(), $productReactions: productReactions)
 	    $productReactionIds: List() from accumulate (
@@ -26,7 +27,7 @@ rule "Routine changed too often without any unwanted product reactions"
 	        	$products: products
 	        ) from $routines and
 	        List(size == 0) from collect(
-         		Product($productId: id, $productId memberOf $productReactionIds) from $products // NOT EXISTS?
+         		Product($productId: id, $productId memberOf $productReactionIds) from $products
          	),
 	        count($r)
 	    )
